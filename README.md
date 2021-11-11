@@ -8,3 +8,4 @@
 ## Authors
 ---
 * # TODO: Add your names and emails here
+Jeremy Diamond socjeremyd@gmail.com
