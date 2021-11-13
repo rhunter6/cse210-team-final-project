@@ -10,8 +10,8 @@ GitHub Version Control
 
 ## Feature List
 * (2) Main Scene
-* * (2) Play button
-** (3) Help button
+    * (2) Play button
+    * (3) Help button
 
 
 (1) Gane Scene (4 levels)
