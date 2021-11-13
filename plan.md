@@ -1,8 +1,7 @@
-What program are we going to create?
-
+## Program Information
 Our program is a scrolling platformer game, where the player controls a character who shoots fireballs and avoids enemies.
 
-What technologies will we use? 
+## Technologies Used 
 Python 3.8.0
 Arcade library
 Random Python Module
@@ -50,7 +49,7 @@ GitHub Version Control
     * (4) All-time stats
 
 
-## Timeline?
+## Timeline
 * The alpha will be completed by November 21st
 * The beta release will be finished on Nov 27th
 * The release candidate will be finished on Dec 4th
