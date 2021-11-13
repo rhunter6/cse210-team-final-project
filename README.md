@@ -44,6 +44,8 @@ root                    (project root folder)
 
 ## Features to Include 
 ---
+THIS SECTION IS TABBED OUT TO BE EASIER TO READ IF YOU DOWNLOAD IT OR HIT THE EDIT BUTTON!
+
 #1 = must have
 #2 = nice to have
 #3 = just for fun if there is time
