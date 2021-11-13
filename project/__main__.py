@@ -1,3 +1,5 @@
+import arcade
+
 def main(screen):
     pass
 
