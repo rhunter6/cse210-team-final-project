@@ -1,3 +1,10 @@
+## Authors
+---
+Alan Crisanto - alanvcrisanto@gmail.com
+Tianna DeSpain - tiannadespain@gmail.com
+Nephi Malit - byui@nephi.malit.me
+Tatenda Felix Mukaro - muk21002@byui.edu
+
 ## Program Information
 Our program is a scrolling platformer game, where the player controls a character who shoots fireballs and avoids enemies.
 
