@@ -14,7 +14,7 @@ https://github.com/nephi-byui/cse210-team-final-project.git
 
 ## Basic Requirements met:
 * Created a project plan document
-* https://github.com/nephi-byui/cse210-team-final-project/blob/master/plan.md
+* https://github.com/nephi-byui/cse210-team-final-project/blob/master/docs/plan.md
 
 ## Extra Features implemented:
 * Created a webpage with mockup scenes
