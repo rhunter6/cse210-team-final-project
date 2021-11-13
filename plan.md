@@ -34,7 +34,7 @@ GitHub Version Control
 * (2) Puzzle Update Scene
     * (2) shows the state of the puzzle completion
 
-* (2) Final Scene (initated after four levels completed)
+* (2) Final Boss Scene (initated after four levels completed)
     * The other elements from Game Scene
     * (2) Contains a Final Boss
 
