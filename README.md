@@ -4,7 +4,7 @@ The goal is simple, control your rocket ship and avoid the asteroids. Try not to
 
 ## Getting Started
 ---
-Make sure you have Python 3.8.0 or newer and the newest version arcade installed and running on your machine. 
+Make sure you have Python 3.8.0 or newer and the newest version of Arcade installed and running on your machine. 
 
 You can install Arcade by opening a terminal 
 and running the following command.
