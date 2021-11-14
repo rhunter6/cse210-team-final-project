@@ -13,10 +13,10 @@
 * A finish
 * A Player token
 
-## Timeline
-*
+
 ## Authors
 Jennifer Clark Jennifer.c.schultz@gmail.com
+Benjamin Welsch bwelsch@byui.edu
 ---
 * # TODO: Add your names and emails here
 
