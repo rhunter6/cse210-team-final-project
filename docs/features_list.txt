@@ -1,0 +1,25 @@
+(1) means top priority, 
+(2) means middle priority, 
+(3) means lowest priority.
+
++ (2) Title Screen
+
+    - (2) Play button 
+    - (3) "How to play" button
+
++ (1) Game Scene
+    
+    - (1) Rocket ship
+    - (1) Obstacles (asteroids)
+    - (2) Life display
+    - (2) Score display
+    - (3) Sound effects
+
++ (3) "How to play" Scene
+
+    - (3) Instructions
+
++ (2) Win scene
+
+    - (2) "You win!" animation
+    - (3) "Play again?" button
