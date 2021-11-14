@@ -3,7 +3,7 @@
 ## Required Technologies
 ---
 * Python 3.8.0
-* Arcade
+* Arcade - https://realpython.com/arcade-python-game-framework/
 
 ## Authors
 ---
