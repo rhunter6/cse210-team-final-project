@@ -7,4 +7,6 @@
 
 ## Authors
 ---
-* # TODO: Add your names and emails here
+* Reece Mickelson - mmickelson108@gmail.com
+* Jorge Flores - jafc120@gmail.com
+* Coty Fivecoat - fiveoat@gmail.com
