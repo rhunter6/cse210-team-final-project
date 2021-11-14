@@ -85,4 +85,4 @@ We will complete this project over the next 4 weeks
 
 ## Authors
 ---
-Jermey Diamond socjeremyd@gmail.com
+Jeremy Diamond socjeremyd@gmail.com
