@@ -8,7 +8,7 @@ Game board,(Board) this needs to be a grid that is 800 by 800.
 Player token.(Player) This is the player that moves from square to square.
 
 Player moves.(Move) this is the one that moves the player. it should move them left, right
-    up or down. that's all this should do.
+    up or down. that's all this should do. Or it could just be a mouse move. no buttons. 
 
 Squares: 
     1. it needs to activate a random choice when you land on it.
