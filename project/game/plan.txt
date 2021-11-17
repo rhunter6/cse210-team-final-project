@@ -1,0 +1,39 @@
+ This is a brief outline of what I think we need to start work on this game.
+ these can be their own files and classes with in files.
+
+Game board,(Board) this needs to be a grid that is 800 by 800.
+    the game board needs to have 36 squares. and it would be nice if they were two colors. 
+    like red and blue or white and black. 
+
+Player token.(Player) This is the player that moves from square to square.
+
+Player moves.(Move) this is the one that moves the player. it should move them left, right
+    up or down. that's all this should do.
+
+Squares: 
+    1. it needs to activate a random choice when you land on it.
+        that random choice should be:
+        1. add points, move again
+        2. subtract points, move again
+        3. explode your dead, game over
+        4. nothing happens, move again
+
+End game:
+    1. lose - conditions
+        you explode
+        you fall to zero points
+    2. win - conditions
+        you make it to the end of the board. 
+
+Points:
+    1. start with points = 4?
+    2. add points
+    3. suptract points.
+    4 check points
+    If you have 0 points you lose, even if you don't explode. 
+
+This is where we should start. 
+If there is something you want to add. add it here and itital it so we know who wrote it. 
+
+If we need to rethink something to make it work better or if it's too complicated for whatever
+reason. make notes here. 
