@@ -17,6 +17,7 @@ margin = 5
 screen_width = 635 # maybe put these in a constants file
 screen_height = 635 #these should be (width + height) * colum or row + margin
 title = "Exploding Checkers"
+
 class Board(arcade.Window):
     """ main board
         we need a two dimentional aray.  I think this makes cordinates? 
