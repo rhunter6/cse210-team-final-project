@@ -10,6 +10,10 @@ Player token.(Player) This is the player that moves from square to square.
 Player moves.(Move) this is the one that moves the player. it should move them left, right
     up or down. that's all this should do. Or it could just be a mouse move. no buttons. 
 
+Director () This is how we control the sequence of play. 
+        We need to wait on coding a director til we have the others made so
+        we don't struggle so badly with matching names.
+
 Squares: 
     1. it needs to activate a random choice when you land on it.
         that random choice should be:
