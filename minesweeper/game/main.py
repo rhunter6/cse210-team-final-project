@@ -36,6 +36,7 @@ class MyGame(arcade.Window):
         # Draw the grid
         for row in range(ROW_COUNT):
             for column in range(COLUMN_COUNT):
+                
                 # Figure out what color to draw the box
                 if self.grid[row][column] == 1:
                     color = arcade.color.CORAL
