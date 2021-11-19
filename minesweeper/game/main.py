@@ -19,8 +19,8 @@ SCREEN_TITLE = "MINESWEEPER"
 class MyGame(arcade.Window):
 
     def __init__(self, width, height, title):
-
         super().__init__(width, height, title)
+
         # creating 2d array
         self.grid = []
         for row in range(ROW_COUNT):
@@ -31,7 +31,6 @@ class MyGame(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK)
 
     def on_draw(self):
-
         arcade.start_render()
 
         # Draw the grid
@@ -51,13 +50,11 @@ class MyGame(arcade.Window):
                 arcade.draw_rectangle_filled(x, y, WIDTH, HEIGHT, color)
 
     def on_mouse_press(self, x, y, button, modifiers):
-
         # Change the x/y screen coordinates to grid coordinates
         column = int(x // (WIDTH + MARGIN))
         row = int(y // (HEIGHT + MARGIN))
 
-        if row < ROW_COUNT and column < COLUMN_COUNT:
-            
+        if row < ROW_COUNT and column < COLUMN_COUNT:            
             if self.grid[row][column] == 0:
                 self.grid[row][column] = 1
             else:
@@ -65,7 +62,6 @@ class MyGame(arcade.Window):
 
 
 def main():
-
     MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     arcade.run()
 
