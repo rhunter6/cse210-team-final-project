@@ -3,6 +3,10 @@ The root package contains all the source code for the game.
 """
 from game import constants
 import arcade
+from game.enemy import Enemy
+from game.player import Player
+from game.bullet import Bullet
+
 
 
 class Game(arcade.window): 
@@ -29,11 +33,30 @@ class Game(arcade.window):
         pass
     
     def on_key_press(self):
-        pass
+        if arcade.key.LEFT in self.held_keys: 
+            pass
+        
+        if arcade.key.RIGHT in self.held_keys:
+            pass
     
+        if arcade.key.UP in self.held_keys: 
+            pass
+        
+        if arcade.key.DOWN in self.held_keys: 
+            pass
+        
     def on_key_release(self, key: int, modifiers: int):
         if key in self.held_keys:
             self.held_keys.remove(key)
+            
+            if key == arcade.key.SPACE:
+                bullet = Bullet()
+                bullet.fire(self.player.velocity, self.player.center, self.player.angle)
+
+                self.bullets.append(bullet)
+        else:
+            if key == arcade.key.ENTER:
+                self.restart()
     
     def check_collisions(self):
         pass
