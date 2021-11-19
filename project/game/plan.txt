@@ -1,7 +1,7 @@
  This is a brief outline of what I think we need to start work on this game.
  these can be their own files and classes with in files.
 
-Game board,(Board) this needs to be a grid that is 800 by 800.
+Game board,(Board) this needs to be a grid that is determined by the size of the boxes used.
     the game board needs to have 36 squares. and it would be nice if they were two colors. 
     like red and blue or white and black. 
     11-18-2021 I added colors purple and green to board.play
@@ -26,6 +26,9 @@ Squares:
         2. subtract points, move again
         3. explode your dead, game over
         4. nothing happens, move again
+    maybe we should keep it simpler and just use a color for safe and a color for die. not
+    make it as complicated as I originally wrote. 
+    we activate a square and it either turns purple or green. purple is die green is live.
 
 End game:
     1. lose - conditions
