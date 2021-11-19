@@ -3,7 +3,7 @@ from point import Point
 from velocity import Velocity
 
 class Actor(): 
-  def __init__(self):
+    def __init__(self):
         self.center = Point()
         self.velocity = Velocity()
         self.radius = 0.0
