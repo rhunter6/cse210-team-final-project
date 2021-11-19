@@ -1,9 +1,7 @@
 import arcade
 
-
 ROW_COUNT = 15
 COLUMN_COUNT = 15
-
 
 WIDTH = 30
 HEIGHT = 30
@@ -34,8 +32,6 @@ class MyGame(arcade.Window):
 
     def on_draw(self):
 
-
-
         arcade.start_render()
 
         # Draw the grid
@@ -63,8 +59,7 @@ class MyGame(arcade.Window):
         print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({row}, {column})")
 
         if row < ROW_COUNT and column < COLUMN_COUNT:
-
-
+            
             if self.grid[row][column] == 0:
                 self.grid[row][column] = 1
             else:
