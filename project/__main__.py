@@ -1,4 +1,5 @@
 import arcade
+from constants.py import constants
 
 def main(screen):
     pass
