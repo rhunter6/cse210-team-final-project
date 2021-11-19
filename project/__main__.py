@@ -9,13 +9,7 @@ from game.bullet import Bullet
 
 
 def main(screen):
-    
-    arcade.open_window(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
-
-    arcade.set_background_color(arcade.color.WHITE)
-    
-    arcade.Window = Game(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT)
-    arcade.run()
+    pass
 
 if __name__ == "__main__":
     arcade.run()
