@@ -46,9 +46,9 @@ class Board(arcade.Window):
                 #not the coridinates. I think.. I'm not 100% clear yet.
                 position = row * column_count + column
                 if self.grid[row][column].color == 0:
-                    self.grid_sprite_list[position].color =arcade.color.BLACK
+                    self.grid_sprite_list[position].color =arcade.color.PURPLE
                 else:
-                    self.grid_sprite_list[position].color = arcade.color.WHITE
+                    self.grid_sprite_list[position].color = arcade.color.GREEN
 
     def on_draw(self):
         """ render screen"""
@@ -57,18 +57,19 @@ class Board(arcade.Window):
         arcade.start_render()
 
          #draw grid
-        for row in range(row_count):
-            for column in range(column_count):
-                #what color is box
-                if self.grid[row][column] == 1:
-                    color = arcade.color.BLUE
-                else:
-                    color = arcade.color.WHITE
+         #this doesn't work the  way the way we need
+        # for row in range(row_count):
+        #     for column in range(column_count):
+        #         #what color is box
+        #         if self.grid[row][column] == 1:
+        #             color = arcade.color.BLUE
+        #         else:
+        #             color = arcade.color.WHITE
 
                 #draw the box
-                arcade.draw_rectangle_filled( width, height, color)
+        arcade.draw_rectangle_filled( width, height, color)
         
-
+#move to different class
     def on_mouse_press():
         """ called when player presses a key up, down, left, right. 
         

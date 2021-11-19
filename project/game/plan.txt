@@ -4,6 +4,11 @@
 Game board,(Board) this needs to be a grid that is 800 by 800.
     the game board needs to have 36 squares. and it would be nice if they were two colors. 
     like red and blue or white and black. 
+    11-18-2021 I added colors purple and green to board.play
+    11-18-21 I added a seperate board called board2.py this board works unlike board.py
+    I got learned it from a tutorial, I put it inthe comments in the file. all it does is 
+    creates a board. I think it is the one I am going with. we can decide which one to work 
+    of . 
 
 Player token.(Player) This is the player that moves from square to square.
 
