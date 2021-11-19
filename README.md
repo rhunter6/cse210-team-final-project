@@ -90,4 +90,5 @@ We will complete this project over the next 4 weeks
 Jeremy Diamond  socjeremyd@gmail.com
 Alirio Mieres mie21001@byui.edu
 Ryder Garache gryderjose@gmail.com
+Pierre Phil Bangay pierrephild@gmail.com
 
