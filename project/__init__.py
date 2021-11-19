@@ -15,7 +15,7 @@ class Game(arcade.window):
         pass
 
     def on_draw(self):
-        pass
+        arcade.start_render()
 
     def update(self):
         pass
