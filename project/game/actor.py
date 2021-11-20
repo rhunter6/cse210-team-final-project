@@ -1,6 +1,6 @@
 import arcade
-from point import Point
-from velocity import Velocity
+from game.point import Point
+from game.velocity import Velocity
 
 class Actor(): 
     def __init__(self):
