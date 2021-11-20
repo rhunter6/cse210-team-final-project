@@ -3,6 +3,7 @@ from arcade.color import RED
 from game import constants
 from arcade.draw_commands import draw_rectangle_filled
 from arcade.text_pyglet import draw_text
+
 '''
 # Do the math to figure out our screen dimensions
 SCREEN_WIDTH = (constants.WIDTH + constants.MARGIN) * constants.COLUMN_COUNT + constants.MARGIN
@@ -31,17 +32,20 @@ class GameView(arcade.View):
                 x = column * (constants.WIDTH + constants.MARGIN) + (constants.WIDTH / 2 + constants.MARGIN)
                 y = row * (constants.HEIGHT + constants.MARGIN) + (constants.HEIGHT / 2 + constants.MARGIN)
                 #Use Arcade.sprite
-                sprite = arcade.SpriteSolidColor(constants.WIDTH, constants.HEIGHT, arcade.color.WHITE)
+                sprite = arcade.Sprite (constants.PATH+"/icons/default.png", image_height=constants.HEIGHT- (constants.MARGIN/2),image_width=constants.WIDTH - (constants.MARGIN/2))
+                #sprite = arcade.SpriteSolidColor(constants.WIDTH, constants.HEIGHT, arcade.color.WHITE)
                 sprite.center_x = x
                 sprite.center_y = y
                 self.grid_sprite_list.append(sprite)
                 self.grid_sprites[row].append(sprite)# Create variables here
 
+
+
     def on_draw(self):
             """
             Render the screen.
             """
-
+            
             # This command has to happen before we start drawing
             arcade.start_render()
 
@@ -66,11 +70,13 @@ class GameView(arcade.View):
             
             if button == arcade.MOUSE_BUTTON_LEFT:
                 # Flip the location between 1 and 0.
+            
+                
                 if self.grid_sprites[row][column].color == arcade.color.WHITE:
                     self.grid_sprites[row][column].color = arcade.color.RED_DEVIL
                 else:
                     self.grid_sprites[row][column].color = arcade.color.WHITE
-
+                
             if button == arcade.MOUSE_BUTTON_RIGHT:
 
                 # Flip the location between 1 and 0.
