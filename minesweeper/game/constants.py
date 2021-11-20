@@ -1,3 +1,5 @@
+import arcade
+import os
 #Screen size
 
 START_SCREEN_WIDTH = 800
@@ -18,3 +20,7 @@ MARGIN = 5
 SCREEN_WIDTH = int((WIDTH + MARGIN) * COLUMN_COUNT + MARGIN)
 SCREEN_HEIGHT = int((HEIGHT + MARGIN) * ROW_COUNT + MARGIN + HEADER)
 SCREEN_TITLE = "Array Backed Grid Buffered Example"
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+
+EXPLODED_BOMB = (PATH+"/icons/bomb.png")

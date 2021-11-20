@@ -5,6 +5,7 @@ from game import constants
 from game.game_view import GameView
 
 
+
 class MenuView(arcade.View):
     """ Class that manages the 'menu' view. """
    
