@@ -1,9 +1,13 @@
 import arcade
 import arcade.gui
+from arcade.sound import Sound, stop_sound
+from arcade.window_commands import close_window
 from game import constants
 from game.menu_view import MenuView
+# from game.game_help import HowtoPlayView
+import os
 
-
+path = os.path.dirname(os.path.realpath(__file__))
 class PrincipalMenuView(arcade.View):
     """ Class that manages the 'menu' view. """
 
@@ -19,6 +23,9 @@ class PrincipalMenuView(arcade.View):
 
         arcade.set_background_color(arcade.color.GRAY_ASPARAGUS)
 
+        self.audio_sound = arcade.sound.load_sound(f"{path}\\sound.mp3")
+        arcade.play_sound(self.audio_sound)
+
         # Create a vertical BoxGroup to align buttons
         self.v_box = arcade.gui.UIBoxLayout(
             x=0, y=0, vertical=False, align="top")
@@ -28,14 +35,11 @@ class PrincipalMenuView(arcade.View):
         play = arcade.gui.UIFlatButton(text="Play", width=200)
         self.v_box.add(play.with_space_around(left=20, right=20))
 
-        how_to_play = arcade.gui.UIFlatButton(text="How to Play", width=200)
-        self.v_box.add(how_to_play.with_space_around(left=20, right=20))
-
-        
+               
        # assign buttons to actions
         play.on_click = self.click_level_view
-        how_to_play.on_click = self.click_how_play
-        
+
+                     
 
         # Create a widget to hold the v_box widget, that will center the buttons
         self.manager.add(
@@ -45,25 +49,33 @@ class PrincipalMenuView(arcade.View):
                 child=self.v_box)
         )
 
+        
     def click_level_view(self, event):
-        print("easy:", event)
-        self.level_view()
-
-    def click_how_play(self):
-        # print("Medium:", event)
-        self.instructions()    
-
+        print(event)
+        self.on_mouse_press()
+                       
     def on_draw(self):
         """ Draw the menu """
         arcade.start_render()
         self.manager.draw()
-       
-    def level_view(self):
-        
-        view = MenuView()
-        self.window.show_view(view)
 
-    # def instructions(self):
+    # def on_hide_view(self):
+    #     return super().on_hide_view()
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ If the user presses the mouse button, start the game. """
+        game_view = MenuView()
+        game_view.on_show()
+        self.window.show_view(game_view)
+       
+    # def level_view(self):        
+    #     view = MenuView()
+    #     view.on_show()
+    #     self.window.show_view(view)
+        
+        
+
+    
 
 
 

@@ -52,15 +52,15 @@ class MenuView(arcade.View):
 
     def on_click_easy(self, event):
         print("easy:", event)
-        self.start_game()
+        self.on_mouse_press()
 
     def on_click_medium(self, event):
-        print("Medium:", event)
-        self.start_game()
+        print("Medium:", event)        
+        self.on_mouse_press()
 
     def on_click_hard(self, event):
         print("Hard:", event)
-        self.start_game()
+        self.on_mouse_press()
 
 
     def on_draw(self):
@@ -70,13 +70,17 @@ class MenuView(arcade.View):
         #arcade.draw_text("Menu Screen - click to advance", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
          #                arcade.color.BLACK, font_size=30, anchor_x="center")
 
-    
-    def start_game (self):
-        """ Use a mouse press to advance to the 'game' view. """
-        print("START THE GAME!!!")
-        
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ If the user presses the mouse button, start the game. """
         game_view = GameView()
-        #game_view.setup()
+        game_view.on_draw()
         self.window.show_view(game_view)
+    # def start_game (self):
+    #     """ Use a mouse press to advance to the 'game' view. """
+    #     print("START THE GAME!!!")
+        
+    #     game_view = GameView()
+    #     #game_view.setup()
+    #     self.window.show_view(game_view)
      
   
