@@ -19,7 +19,7 @@ MARGIN = 5
 
 SCREEN_WIDTH = int((WIDTH + MARGIN) * COLUMN_COUNT + MARGIN)
 SCREEN_HEIGHT = int((HEIGHT + MARGIN) * ROW_COUNT + MARGIN + HEADER)
-SCREEN_TITLE = "Array Backed Grid Buffered Example"
+SCREEN_TITLE = "Minesweeper"
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 
