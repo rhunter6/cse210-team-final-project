@@ -1,11 +1,11 @@
 # import arcade
 # import arcade.gui
 # from game import constants
-# from game.menu_view import MenuView
+# from game.principal_menu import PrincipalMenuView
 
 
-# class PrincipalMenuView(arcade.View):
-#     """ Class that manages the 'menu' view. """
+# class HowtoPlayView(arcade.View):
+#     """ Class that manages the 'help' view. """
 
 #     def on_show(self):
 #         """ Called when switching to this view"""
@@ -22,6 +22,7 @@
 #         # Create a vertical BoxGroup to align buttons
 #         self.v_box = arcade.gui.UIBoxLayout(
 #             x=0, y=0, vertical=False, align="top")
+#         arcade.Text()
 
 #         # Create the buttons
 

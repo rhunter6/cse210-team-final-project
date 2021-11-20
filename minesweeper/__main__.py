@@ -1,4 +1,4 @@
-from game.director import Director
+# from game.director import Director
 import arcade
 from game import constants
 from game.principal_menu import PrincipalMenuView
