@@ -59,24 +59,21 @@ class Game(arcade.Window):
                 arcade.draw_rectangle_filled(x,y, width, height, color)
 
 
-    # def on_mouse_press(self, x,y, button, modifiers):
-    #     """ called when user presses a mouse button
+    def on_mouse_press(self, x,y, button, modifiers):
+        """ called when user presses a mouse button
         
-    #     """
-    #     #change the  x/y screencoordinates to grid coordinates
-    #     column =x // (width + margin)
-    #     row = y // (height + margin)
+        """
+        #change the  x/y screencoordinates to grid coordinates
+        row =x // (width + margin)
+        column = y // (height + margin)
 
-    #     print(f"click coordinated: ({x}, {y},).grid coordinates : ({row}, {column})")
+        print(f"click coordinated: ({x}, {y},).grid coordinates : ({row}, {column})")
 
-    #     #make sure you are on grid. It is possible to  click in the upper right
-    #     #corner in the margin and go to a grid location that doesn't exist #fix that later
-    #     if row < row_count and column < column_count:
-    #         #change location between 1 and 0
-    #         if self.grid[row][column] == 0:
-    #             self.grid[row][column] = 1
-    #         else:
-    #             self.grid[row][column] = 0
+        #make sure you are on grid. It is possible to  click in the upper right
+        #corner in the margin and go to a grid location that doesn't exist #fix that later
+        if row < row_count and column < column_count:
+            self.grid[row][column] == 1
+            self.grid[row][column] = 1
     
 def main():
 

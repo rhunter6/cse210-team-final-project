@@ -1,5 +1,5 @@
 import arcade
-from arcade.color import WHITE
+from arcade.color import *
 
 # we need 6 rows
 # we need 6 columns
@@ -45,7 +45,7 @@ class Board(arcade.Window):
                 #if you change it to a sprite list you can change things based on the list
                 #not the coridinates. I think.. I'm not 100% clear yet.
                 position = row * column_count + column
-                if self.grid[row][column].color == 0:
+                if self.grid[row][column].color == 1:
                     self.grid_sprite_list[position].color =arcade.color.PURPLE
                 else:
                     self.grid_sprite_list[position].color = arcade.color.GREEN
@@ -75,10 +75,10 @@ class Board(arcade.Window):
         
         """
         pass
-# def main():
+def main():
 
-#     window = Board(screen_height,screen_width, title)
-#     arcade.run()
-# if __name__ == "__main__":
-#     main()
+    window = Board(screen_height,screen_width, title)
+    arcade.run()
+if __name__ == "__main__":
+    main()
 #I was trying this out in a different folder.
