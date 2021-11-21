@@ -3,6 +3,7 @@ from learn.arcade.academy tutorial
 
 """
 import arcade
+import player
 
 # sets how many rows and collumns
 row_count = 6
@@ -37,6 +38,15 @@ class Game(arcade.Window):
             for column in range(column_count):
                 self.grid[row].append(0) #append a cell
         arcade.set_background_color(arcade.color.BLACK)
+        self.all_sprites = arcade.SpriteList()
+        self.player = arcade.Sprite("flower.png")
+        
+        self.player.sprite = arcade.SpriteList()
+        self.player = arcade.Sprite("flower.png") #we should change this picture
+        self.player.center_y = self.height / 2
+        self.player.left = 15
+        self.all_sprites.append(self.player)
+
 
     def on_draw(self):
         """ render screen"""

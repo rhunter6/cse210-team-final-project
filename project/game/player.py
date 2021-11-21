@@ -8,8 +8,12 @@ class Player(arcade.Window):
 
     def __init__(self):
         super().__init__(width, height, title)
-        
+
         self.player.sprite = arcade.SpriteList()
+        self.player = arcade.Sprite("flower.png") #we should change this picture
+        self.player.center_y = self.height / 2
+        self.player.left = 15
+        self.all_sprites.append(self.player)
 
 
-    pass
+    
