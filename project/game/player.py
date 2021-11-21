@@ -16,4 +16,4 @@ class Player(arcade.Window):
         self.all_sprites.append(self.player)
 
 
-    pass
+    
