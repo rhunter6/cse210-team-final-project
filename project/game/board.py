@@ -4,7 +4,7 @@ from arcade.color import *
 # we need 6 rows
 # we need 6 columns
 row_count = 6 #changed names for clarity
-column_count = 6#changed names for clarity
+column_count = 6 #changed names for clarity
 
 #each grid location needs a width and height and margin
 width = 100
