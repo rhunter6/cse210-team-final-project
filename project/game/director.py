@@ -3,6 +3,7 @@ from game import constants
 from game.game_objects.player import Player
 from game.game_objects.platform import Platform
 from game.game_objects.wall import Wall
+from game.game_objects.projectiles import Bullet
 
 class Director(arcade.Window):
     """ Main application class. """
@@ -48,10 +49,10 @@ class Director(arcade.Window):
         opaque_objects = [self.platform_list, self.wall_list]
         
         # player
-        self.player_sprite = Player(25, color="white")
-        self.player_sprite.center_x = 200
-        self.player_sprite.center_y = 300
-        self.player_list.append(self.player_sprite)
+        self.the_player = Player(25, color="white")
+        self.the_player.center_x = 200
+        self.the_player.center_y = 300
+        self.player_list.append(self.the_player)
 
         # platform
         ground = Platform(800,50, color="white")
@@ -67,7 +68,7 @@ class Director(arcade.Window):
             wall.center_y = int(constants.SCREEN_HEIGHT / 3)
             self.wall_list.append(wall)
 
-        self.platform_physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
+        self.platform_physics_engine = arcade.PhysicsEnginePlatformer(self.the_player,
                                                             opaque_objects,
                                                             constants.GRAVITY,
                                                             ladders=self.ladder_list)
@@ -103,7 +104,9 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
-        pass
+        bullet = Bullet(direction)
+        bullet.position = self.the_player._get_position()
+        self.projectile_list.append(bullet)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.
@@ -115,18 +118,22 @@ class Director(arcade.Window):
 
         # BASIC DIRECTIONS
         if key == arcade.key.UP:
-            self.player_sprite.change_y = constants.MOVEMENT_SPEED
+            self.the_player.change_y = constants.MOVEMENT_SPEED
+            self.the_player.set_orientation("UP")
         elif key == arcade.key.DOWN:
-            self.player_sprite.change_y = -constants.MOVEMENT_SPEED
+            self.the_player.change_y = -constants.MOVEMENT_SPEED
+            self.the_player.set_orientation("DOWN")
         elif key == arcade.key.LEFT:
-            self.player_sprite.change_x = -constants.MOVEMENT_SPEED
+            self.the_player.change_x = -constants.MOVEMENT_SPEED
+            self.the_player.set_orientation("LEFT")
         elif key == arcade.key.RIGHT:
-            self.player_sprite.change_x = constants.MOVEMENT_SPEED
+            self.the_player.change_x = constants.MOVEMENT_SPEED
+            self.the_player.set_orientation("RIGHT")
 
         # SHOOTING
         elif key == arcade.key.SPACE:
-            direction = 1 #replace this with code to get direction
-            self.shoot(direction)
+            orientation = self.the_player.get_orientation()
+            self.shoot(orientation)
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key.
@@ -137,9 +144,13 @@ class Director(arcade.Window):
         """
 
         if key == arcade.key.UP or key == arcade.key.DOWN:
-            self.player_sprite.change_y = 0
+            self.the_player.change_y = 0
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            self.player_sprite.change_x = 0
+            self.the_player.change_x = 0
+
+    def do_updates(self, delta_time):
+        for projectile in self.projectile_list:
+            projectile.update()
 
     def on_update(self, delta_time):
         """ Does physics and other updates
