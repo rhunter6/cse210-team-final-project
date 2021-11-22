@@ -1,9 +1,12 @@
 import arcade
 from game import constants
-from game.game_objects.player import Player
-from game.game_objects.platform import Platform
-from game.game_objects.wall import Wall
-from game.game_objects.projectiles import Bullet
+
+from game.live_actors.player import Player
+from game.live_actors.bullet import Bullet
+
+from game.props.platform import Platform
+from game.props.wall import Wall
+
 
 class Director(arcade.Window):
     """ Main application class. """
@@ -98,7 +101,7 @@ class Director(arcade.Window):
         self.ladder_list.draw()
 
     def shoot(self, direction):
-        """ Put the code that handles the shooting here
+        """ Shoots a single bullet
         ARGS:
             self (Director): an instance of Director
         RETURNS:
@@ -106,7 +109,13 @@ class Director(arcade.Window):
         """
         bullet = Bullet(direction)
         bullet.position = self.the_player._get_position()
+
+        if constants.DEBUG_MODE:
+            print(f"shooting at direction: {bullet.get_orientation()}")
+
         self.projectile_list.append(bullet)
+        
+        
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.
@@ -120,12 +129,15 @@ class Director(arcade.Window):
         if key == arcade.key.UP:
             self.the_player.change_y = constants.MOVEMENT_SPEED
             self.the_player.set_orientation("UP")
+
         elif key == arcade.key.DOWN:
             self.the_player.change_y = -constants.MOVEMENT_SPEED
             self.the_player.set_orientation("DOWN")
+
         elif key == arcade.key.LEFT:
             self.the_player.change_x = -constants.MOVEMENT_SPEED
             self.the_player.set_orientation("LEFT")
+
         elif key == arcade.key.RIGHT:
             self.the_player.change_x = constants.MOVEMENT_SPEED
             self.the_player.set_orientation("RIGHT")
@@ -134,6 +146,10 @@ class Director(arcade.Window):
         elif key == arcade.key.SPACE:
             orientation = self.the_player.get_orientation()
             self.shoot(orientation)
+
+        elif key == arcade.key.R:
+            for bullet in self.projectile_list:
+                bullet.move()
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key.
@@ -148,9 +164,8 @@ class Director(arcade.Window):
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.the_player.change_x = 0
 
-    def do_updates(self, delta_time):
-        for projectile in self.projectile_list:
-            projectile.update()
+
+    
 
     def on_update(self, delta_time):
         """ Does physics and other updates
@@ -160,3 +175,5 @@ class Director(arcade.Window):
             none
         """
         self.platform_physics_engine.update()
+        for bullet in self.projectile_list:
+            bullet.update()
