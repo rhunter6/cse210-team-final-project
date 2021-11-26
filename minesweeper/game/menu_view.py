@@ -99,6 +99,11 @@ class MenuView(arcade.View):
                         width=constants.START_SCREEN_WIDTH,
                         align="center")
 
+    def on_hide_view(self):
+        """Disable gui manager"""
+        super().on_hide_view()
+        self.manager.disable()
+
 
      
   

@@ -24,14 +24,14 @@ class ExplosionCheck:
         print (f"Location: {location}, Row: {row}, Column: {column}") # FOR TESTING REMOVE
         #is it a bomb?
         if location in constants.MINE_LOCATIONS:
-            return "b"
+            return "bomb"
 
         else:
         
             lower_row = row - 1
             left_column = column -1       
             bombs_counted = ExplosionCheck.check_adjacent(location, lower_row, left_column)
-            return bombs_counted
+            return str(bombs_counted)
             
 
     def check_adjacent(location, lower_row, left_column):

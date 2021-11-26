@@ -1,6 +1,8 @@
+from PIL.Image import new
 import arcade
-from arcade.color import RED
 from game import constants
+from arcade.color import RED
+from game.move_piece import MovePiece
 from arcade.draw_commands import draw_rectangle_filled
 from arcade.text_pyglet import draw_text
 from game.explosion_check import ExplosionCheck
@@ -72,45 +74,14 @@ class GameBoard(arcade.View):
         
         if row < constants.ROW_COUNT and column < constants.COLUMN_COUNT:
             
-            if button == arcade.MOUSE_BUTTON_LEFT:
-    
+            if button == arcade.MOUSE_BUTTON_LEFT:    
 
                 test_value = ExplosionCheck.check_left(location, row, column )
 
-                if test_value == "b":
-                    self.grid_sprites[row][column].color = arcade.color.RED
-                    GameOver()
-
-                if test_value == 0:
-                    self.grid_sprites[row][column].color = arcade.color.GREEN
-                    # add function that will open all surrounding 0s level 3 request
-                
-                if test_value == 1:
-                    self.grid_sprites[row][column].color = arcade.color.TROLLEY_GREY
-
-                if test_value == 2:
-                    self.grid_sprites[row][column].color = arcade.color.YELLOW
-
-                if test_value == 3:
-                    self.grid_sprites[row][column].color = arcade.color.MAROON
-            
-                if test_value == 4:
-                    self.grid_sprites[row][column].color = arcade.color.CYAN
-
-                if test_value == 5:
-                    self.grid_sprites[row][column].color = arcade.color.MAGENTA
-
-                if test_value == 6:
-                    self.grid_sprites[row][column].color = arcade.color.BROWN
-
-                if test_value == 7:
-                    self.grid_sprites[row][column].color = arcade.color.MUSTARD
-
-                if test_value == 8:
-                    self.grid_sprites[row][column].color = arcade.color.PIGGY_PINK
-
-                print(test_value)
-                print(constants.MINE_FIELD)
+                new_sprite = MovePiece.move_piece(row,column, test_value)
+                self.grid_sprite_list.append(new_sprite)
+                #self.grid_sprites[row][column].color = arcade.color.RED
+                GameOver()
             
                 
             if button == arcade.MOUSE_BUTTON_RIGHT:
@@ -118,47 +89,21 @@ class GameBoard(arcade.View):
                                 
                 test_value = ExplosionCheck.check_right(location)
                 
+                
                 if test_value == "f":
-                    self.grid_sprites[row][column].color = arcade.color.ORANGE
+                   # self.grid_sprites[row][column].color = arcade.color.ORANGE
+                    new_sprite = MovePiece.move_piece(row,column, "flag")
+                    self.grid_sprite_list.append(new_sprite)
             
                 if test_value == "?":
-                    self.grid_sprites[row][column].color = arcade.color.BLUE
+                    #self.grid_sprites[row][column].color = arcade.color.BLUE
+                    new_sprite = MovePiece.move_piece(row,column, "question_mark")
+                    self.grid_sprite_list.append(new_sprite)
 
                 if test_value == "n":
-                    self.grid_sprites[row][column].color = arcade.color.WHITE
-
-                print(test_value)
-                print(constants.MINE_FIELD)
-
+                    #self.grid_sprites[row][column].color = arcade.color.WHITE
+                    new_sprite = MovePiece.move_piece(row,column, "default")
+                    self.grid_sprite_list.append(new_sprite)
             #for testing remove
             print(test_value)
             print(constants.MINE_FIELD)
-
- 
- 
- 
-    '''
-    def setup(self):
-        """ This should set up your game and get it ready to play """
-        # Replace 'pass' with the code to set up your game
-        pass
-
-    def on_show(self):
-        """ Called when switching to this view"""
-        arcade.set_background_color(arcade.color.ORANGE_PEEL)
-
-    def on_draw(self):
-        """ Draw everything for the game. """
-        arcade.start_render()
-        arcade.draw_text("Game - press SPACE to advance", constants.SCREEN_WIDTH / 2, constants.SCREEN_WIDTH / 2,
-                         arcade.color.BLACK, font_size=30, anchor_x="center")
-
-    '''
-    '''
-    def on_key_press(self, key, _modifiers):
-        """ Handle keypresses. In this case, we'll just count a 'space' as
-        game over and advance to the game over view. """
-        if key == arcade.key.SPACE:
-            game_over_view = GameOverView()
-            self.window.show_view(game_over_view)
-    '''
