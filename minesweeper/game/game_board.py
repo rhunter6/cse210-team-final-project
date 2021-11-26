@@ -53,7 +53,7 @@ class GameBoard(arcade.View):
             arcade.start_render()
 
             self.grid_sprite_list.draw()
-            draw_rectangle_filled(constants.SCREEN_WIDTH / 2,constants.SCREEN_HEIGHT - (constants.HEADER / 2),constants.WIDTH * 4 ,constants.HEIGHT * 2,RED)
+            #draw_rectangle_filled(constants.SCREEN_WIDTH / 2,constants.SCREEN_HEIGHT - (constants.HEADER / 2),constants.WIDTH * 4 ,constants.HEIGHT * 2,RED)
         
     def on_mouse_press(self, x, y, button, modifiers):
         """

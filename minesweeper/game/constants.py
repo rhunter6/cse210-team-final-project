@@ -2,14 +2,14 @@ import arcade
 import os
 #Screen size
 
-START_SCREEN_WIDTH = 800
-START_SCREEN_HEIGHT = 600
+START_SCREEN_WIDTH = 1055
+START_SCREEN_HEIGHT = 650
 
 # Set how many rows and columns we will have
 ROW_COUNT = 20
 COLUMN_COUNT = 20
 GRID_SIZE = 400
-HEADER = 75
+HEADER = 100
 
 #number of mines
 MINECOUNT = 0
