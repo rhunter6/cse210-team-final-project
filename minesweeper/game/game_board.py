@@ -3,6 +3,8 @@ from arcade.color import RED
 from game import constants
 from arcade.draw_commands import draw_rectangle_filled
 from arcade.text_pyglet import draw_text
+from game.explosion_check import ExplosionCheck
+from game.game_over import GameOver
 
 '''
 # Do the math to figure out our screen dimensions
@@ -10,12 +12,14 @@ SCREEN_WIDTH = (constants.WIDTH + constants.MARGIN) * constants.COLUMN_COUNT + c
 SCREEN_HEIGHT = (constants.HEIGHT + constants.MARGIN) * constants.ROW_COUNT + constants.MARGIN + constants.HEADER
 SCREEN_TITLE = "Lets play Minesweeper!"
 '''
-class GameView(arcade.View):
+class GameBoard(arcade.View):
     """ Manage the 'game' view for our program. """
 
     def __init__(self):
         super().__init__()
-        arcade.set_background_color(arcade.color.BLACK)
+        
+        arcade.set_background_color(arcade.color.LIGHT_GRAY)
+        
         
         # One dimensional list of all sprites in the two-dimensional sprite list
         self.grid_sprite_list = arcade.SpriteList()
@@ -32,13 +36,12 @@ class GameView(arcade.View):
                 x = column * (constants.WIDTH + constants.MARGIN) + (constants.WIDTH / 2 + constants.MARGIN)
                 y = row * (constants.HEIGHT + constants.MARGIN) + (constants.HEIGHT / 2 + constants.MARGIN)
                 #Use Arcade.sprite
-                sprite = arcade.Sprite (constants.PATH+"/icons/default.png", image_height=constants.HEIGHT- (constants.MARGIN/2),image_width=constants.WIDTH - (constants.MARGIN/2))
+                sprite = arcade.Sprite (constants.PATH+"/icons/default.png", image_height=constants.HEIGHT - (constants.MARGIN/2),image_width=constants.WIDTH - (constants.MARGIN/2))
                 #sprite = arcade.SpriteSolidColor(constants.WIDTH, constants.HEIGHT, arcade.color.WHITE)
                 sprite.center_x = x
                 sprite.center_y = y
                 self.grid_sprite_list.append(sprite)
                 self.grid_sprites[row].append(sprite)# Create variables here
-
 
 
     def on_draw(self):
@@ -60,8 +63,9 @@ class GameView(arcade.View):
         # Change the x/y screen coordinates to grid coordinates
         column = int(x // (constants.WIDTH + constants.MARGIN))
         row = int(y // (constants.HEIGHT + constants.MARGIN))
+        location = int((row * constants.COLUMN_COUNT + column))
 
-        print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({column},{row})")
+        print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({column},{row}). Location: {location}")
 
         # Make sure we are on-grid. It is possible to click in the upper right
         # corner in the margin and go to a grid location that doesn't exist
@@ -69,23 +73,67 @@ class GameView(arcade.View):
         if row < constants.ROW_COUNT and column < constants.COLUMN_COUNT:
             
             if button == arcade.MOUSE_BUTTON_LEFT:
-                # Flip the location between 1 and 0.
-            
+    
+
+                test_value = ExplosionCheck.check_left(location, row, column )
+
+                if test_value == "b":
+                    self.grid_sprites[row][column].color = arcade.color.RED
+                    GameOver()
+
+                if test_value == 0:
+                    self.grid_sprites[row][column].color = arcade.color.GREEN
+                    # add function that will open all surrounding 0s level 3 request
                 
-                if self.grid_sprites[row][column].color == arcade.color.WHITE:
-                    self.grid_sprites[row][column].color = arcade.color.RED_DEVIL
-                else:
-                    self.grid_sprites[row][column].color = arcade.color.WHITE
+                if test_value == 1:
+                    self.grid_sprites[row][column].color = arcade.color.TROLLEY_GREY
+
+                if test_value == 2:
+                    self.grid_sprites[row][column].color = arcade.color.YELLOW
+
+                if test_value == 3:
+                    self.grid_sprites[row][column].color = arcade.color.MAROON
+            
+                if test_value == 4:
+                    self.grid_sprites[row][column].color = arcade.color.CYAN
+
+                if test_value == 5:
+                    self.grid_sprites[row][column].color = arcade.color.MAGENTA
+
+                if test_value == 6:
+                    self.grid_sprites[row][column].color = arcade.color.BROWN
+
+                if test_value == 7:
+                    self.grid_sprites[row][column].color = arcade.color.MUSTARD
+
+                if test_value == 8:
+                    self.grid_sprites[row][column].color = arcade.color.PIGGY_PINK
+
+                print(test_value)
+                print(constants.MINE_FIELD)
+            
                 
             if button == arcade.MOUSE_BUTTON_RIGHT:
 
-                # Flip the location between 1 and 0.
-                if self.grid_sprites[row][column].color == arcade.color.WHITE:
-                    self.grid_sprites[row][column].color = arcade.color.OLD_GOLD
-                else:
+                                
+                test_value = ExplosionCheck.check_right(location)
+                
+                if test_value == "f":
+                    self.grid_sprites[row][column].color = arcade.color.ORANGE
+            
+                if test_value == "?":
+                    self.grid_sprites[row][column].color = arcade.color.BLUE
+
+                if test_value == "n":
                     self.grid_sprites[row][column].color = arcade.color.WHITE
 
- 
+                print(test_value)
+                print(constants.MINE_FIELD)
+
+            #for testing remove
+            print(test_value)
+            print(constants.MINE_FIELD)
+
  
  
  

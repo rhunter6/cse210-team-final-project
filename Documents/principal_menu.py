@@ -64,9 +64,9 @@ class PrincipalMenuView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
-        game_view = MenuView()
-        game_view.on_show()
-        self.window.show_view(game_view)
+        game_board = MenuView()
+        game_board.on_show()
+        self.window.show_view(game_board)
        
     # def level_view(self):        
     #     view = MenuView()

@@ -1,8 +1,10 @@
 import arcade
 import arcade.gui
-
+from game.setup_board import SetupBoard
 from game import constants
-from game.game_view import GameView
+from game.game_board import GameBoard
+from arcade.sound import Sound, stop_sound
+
 
 
 
@@ -19,27 +21,32 @@ class MenuView(arcade.View):
 
         # Set background color
         
-        arcade.set_background_color(arcade.color.GRAY_ASPARAGUS)
-        
+        arcade.set_background_color(arcade.color.LIGHT_GRAY)
+        '''
+        TURNED OFF FOR TESTING ADD BUTTON TO TURN IT BACK ON
+
+        self.audio_sound = arcade.sound.load_sound(f"{constants.PATH}\\sound.mp3")
+        arcade.play_sound(self.audio_sound)
+        '''
     
-        # Create a vertical BoxGroup to align buttons
-        self.v_box = arcade.gui.UIBoxLayout(x=0, y=0,vertical=False, align="top")
+        # Create a Horizontal BoxGroup to align buttons
+        self.v_box = arcade.gui.UIBoxLayout(x=0, y=600,vertical=False, align="top")
 
         # Create the buttons
 
-        easy_button = arcade.gui.UIFlatButton(text="Easy", width=200)
-        self.v_box.add(easy_button.with_space_around(left=20, right=20))
+        self.easy_button = arcade.gui.UIFlatButton(text="Easy", width=200)
+        self.v_box.add(self.easy_button.with_space_around(left=20, right=20))
 
-        medium_button = arcade.gui.UIFlatButton(text="Medium", width=200)
-        self.v_box.add(medium_button.with_space_around(left=20, right=20))
+        self.medium_button = arcade.gui.UIFlatButton(text="Medium", width=200)
+        self.v_box.add(self.medium_button.with_space_around(left=20, right=20))
 
-        hard_button = arcade.gui.UIFlatButton(text="Hard", width=200)
-        self.v_box.add(hard_button.with_space_around(left=20, right=20))        
+        self.hard_button = arcade.gui.UIFlatButton(text="Hard", width=200)
+        self.v_box.add(self.hard_button.with_space_around(left=20, right=20))        
     
        # assign buttons to actions
-        easy_button.on_click = self.on_click_easy
-        medium_button.on_click = self.on_click_medium
-        hard_button.on_click = self.on_click_hard
+        self.easy_button.on_click = self.on_click_easy
+        self.medium_button.on_click = self.on_click_medium
+        self.hard_button.on_click = self.on_click_hard
 
       
         # Create a widget to hold the v_box widget, that will center the buttons
@@ -52,35 +59,27 @@ class MenuView(arcade.View):
 
     def on_click_easy(self, event):
         print("easy:", event)
-        self.on_mouse_press()
+        SetupBoard("easy")
+        print(constants.MINE_LOCATIONS)
+        print(constants.MINE_FIELD)
 
     def on_click_medium(self, event):
         print("Medium:", event)        
-        self.on_mouse_press()
+        SetupBoard("medium")
+        print(constants.MINE_LOCATIONS)
+        print(constants.MINE_FIELD)
 
     def on_click_hard(self, event):
         print("Hard:", event)
-        self.on_mouse_press()
+        SetupBoard("hard")
+        print(constants.MINE_LOCATIONS)
+        print(constants.MINE_FIELD)
 
 
     def on_draw(self):
         """ Draw the menu """
         arcade.start_render()
         self.manager.draw()
-        #arcade.draw_text("Menu Screen - click to advance", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
-         #                arcade.color.BLACK, font_size=30, anchor_x="center")
 
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """ If the user presses the mouse button, start the game. """
-        game_view = GameView()
-        game_view.on_draw()
-        self.window.show_view(game_view)
-    # def start_game (self):
-    #     """ Use a mouse press to advance to the 'game' view. """
-    #     print("START THE GAME!!!")
-        
-    #     game_view = GameView()
-    #     #game_view.setup()
-    #     self.window.show_view(game_view)
      
   
