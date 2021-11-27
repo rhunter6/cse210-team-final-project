@@ -2,5 +2,5 @@ import arcade
 from game.actor import Actor
 
 class Wall(arcade.SpriteSolidColor, Actor):
-    def __init__(self, width: int, height: int, color: "white"):
+    def __init__(self, width: int, height: int, color):
         super().__init__(width, height, color)

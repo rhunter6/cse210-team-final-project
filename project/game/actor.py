@@ -11,6 +11,8 @@ class Actor():
         self.rotate = 0.0
         self.angle = 0.0
         self.points = 0.0
+
+        
         
     def advance(self):
         self.center.x += self.velocity.dx
@@ -27,16 +29,18 @@ class Actor():
         elif self.center.y < 0:
             self.center.y = screen_height
 
-    def set_orientation(self, direction):
+    def set_orientation(self, orientation):
         """ Make the actor face a certain direction
         ARGS:
             self (LiveActor): an instance of Player
             direction (string): should be in [ "UP", "DOWN", "LEFT", "RIGHT" ]
         """
-        direction = direction.upper()
+        orientation = orientation.upper()
 
-        if direction in [ "UP", "DOWN", "LEFT", "RIGHT" ]:
-            self._orientation = direction
+        if orientation in [ "UP", "DOWN", "LEFT", "RIGHT" ]:
+            self._orientation = orientation
+        else:
+            self._orientation = "RIGHT"
         
     def get_orientation(self):
         """ Returns the orientation
