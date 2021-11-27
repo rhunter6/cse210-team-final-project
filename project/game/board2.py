@@ -2,6 +2,7 @@
 from learn.arcade.academy tutorial
 
 """
+import random
 import arcade
 import player
 
@@ -38,14 +39,14 @@ class Game(arcade.Window):
             for column in range(column_count):
                 self.grid[row].append(0) #append a cell
         arcade.set_background_color(arcade.color.BLACK)
-        self.all_sprites = arcade.SpriteList()
-        self.player = arcade.Sprite("flower.png")
+        # self.all_sprites = arcade.SpriteList()
+        # self.player = arcade.Sprite("flower.png")
         
-        self.player.sprite = arcade.SpriteList()
-        self.player = arcade.Sprite("flower.png") #we should change this picture
-        self.player.center_y = self.height / 2
-        self.player.left = 15
-        self.all_sprites.append(self.player)
+        # self.player.sprite = arcade.SpriteList()
+        # self.player = arcade.Sprite("flower.png") #we should change this picture
+        # self.player.center_y = self.height / 2
+        # self.player.left = 15
+        # self.all_sprites.append(self.player)
 
 
     def on_draw(self):
@@ -59,6 +60,8 @@ class Game(arcade.Window):
                 #what color is box
                 if self.grid[row][column] == 1:
                     color = arcade.color.GREEN
+                if self.grid[row][column] == 2:
+                    color = arcade.color.PURPLE
                 else:
                     color = arcade.color.WHITE
                 #math to figure out were box is
@@ -82,8 +85,14 @@ class Game(arcade.Window):
         #make sure you are on grid. It is possible to  click in the upper right
         #corner in the margin and go to a grid location that doesn't exist #fix that later
         if row < row_count and column < column_count:
-            self.grid[row][column] == 1
-            self.grid[row][column] = 1
+            self.grid[row][column] == random.choice([1,2])
+            if self.grid[row][column] == 1:
+                self.grid[row][column] =1
+                #play again
+            if self.grid[row][column] ==2:
+                self.grid[row][column] =2
+                #end game    
+
     
 def main():
 
