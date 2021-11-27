@@ -10,9 +10,7 @@ class Actor():
         self.alive = True
         self.rotate = 0.0
         self.angle = 0.0
-        self.points = 0.0
-
-        
+        self.points = 0.0        
         
     def advance(self):
         self.center.x += self.velocity.dx
@@ -50,3 +48,6 @@ class Actor():
             orientation (STR)
         """
         return self._orientation
+
+    def do_updates():
+        pass

@@ -121,10 +121,9 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
+        # create the bullet
         bullet = Bullet()
-        
-        orientation = self.the_player.get_orientation()
-        bullet.set_orientation(orientation)
+
 
         # position the bullet
         start_x = self.the_player.center_x
@@ -132,6 +131,9 @@ class Director(arcade.Window):
         bullet.center_x = start_x
         bullet.center_y = start_y
         
+        # make the bullet go in the direction the player is facing
+        orientation = self.the_player.get_orientation()
+        bullet.set_orientation(orientation)
         bullet.set_bullet_direction()
 
         if constants.DEBUG_MODE:
@@ -175,13 +177,7 @@ class Director(arcade.Window):
 
         # SHOOTING
         elif key == arcade.key.SPACE:
-            # get where the player is facing
-            orientation = self.the_player.get_orientation()
-            position = self.the_player._get_position()
-
-
-
-            # shoot a bullet in that direction
+            # shoot a bullet
             self.shoot()
 
     def on_key_release(self, key, modifiers):
