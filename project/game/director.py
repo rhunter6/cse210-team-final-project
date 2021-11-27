@@ -30,6 +30,9 @@ class Director(arcade.Window):
         self.wall_list = []
         self.ladder_list = []
 
+        # TESTING
+        self.bullet_list = []
+
     def setup(self):
         """ Initalize the game and creates the sprites.
         ARGS:
@@ -72,10 +75,20 @@ class Director(arcade.Window):
             wall.center_y = int(constants.SCREEN_HEIGHT / 3)
             self.wall_list.append(wall)
 
-        self.platform_physics_engine = arcade.PhysicsEnginePlatformer(self.the_player,
-                                                            opaque_objects,
-                                                            constants.GRAVITY,
-                                                            ladders=self.ladder_list)
+
+        player_sprite = self.the_player
+        platforms = opaque_objects
+        gravity_constant = constants.GRAVITY
+        ladders = self.ladder_list
+
+
+        self.PHYSICS = arcade.PhysicsEnginePlatformer(  player_sprite,
+                                                                        platforms,
+                                                                        gravity_constant,
+                                                                        ladders
+                                                                    )
+
+        self.PHYSICS.enable_multi_jump(2)
 
         # Set the background color
         arcade.set_background_color(arcade.color.JET)
@@ -101,29 +114,34 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
-    def shoot(self, player_orientation, player_position):
+    def shoot(self):
         """ Shoots a single bullet
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
-        #bullet = Bullet()
-        #bullet.set_position(player_position)
-        
-
         bullet = Bullet()
+        
+        orientation = self.the_player.get_orientation()
+        bullet.set_orientation(orientation)
 
-        # set the position of the bullet
-        bullet._set_center_x( self.the_player._get_center_x() )
-        bullet._set_center_y( self.the_player._get_center_y() )
-
-        bullet.set_orientation(player_orientation)
+        # position the bullet
+        start_x = self.the_player.center_x
+        start_y = self.the_player.center_y
+        bullet.center_x = start_x
+        bullet.center_y = start_y
+        
+        bullet.set_bullet_velocity()
 
         if constants.DEBUG_MODE:
             print(f"shooting at direction: {bullet.get_orientation()}")
 
         self.projectile_list.append(bullet)
+
+
+
+        
         
         
     def on_key_press(self, key, modifiers):
@@ -136,8 +154,12 @@ class Director(arcade.Window):
 
         # BASIC DIRECTIONS
         if key == arcade.key.UP:
-            self.the_player.change_y = constants.MOVEMENT_SPEED
-            self.the_player.set_orientation("UP")
+            if self.PHYSICS.can_jump():
+                self.the_player.change_y = constants.MOVEMENT_SPEED
+                self.the_player.set_orientation("UP")
+
+                # track jump count for multijump
+                self.PHYSICS.increment_jump_counter()
 
         elif key == arcade.key.DOWN:
             self.the_player.change_y = -constants.MOVEMENT_SPEED
@@ -156,13 +178,11 @@ class Director(arcade.Window):
             # get where the player is facing
             orientation = self.the_player.get_orientation()
             position = self.the_player._get_position()
-            
-            # shoot a bullet in that direction
-            self.shoot(orientation, position)
 
-        elif key == arcade.key.R:
-            for bullet in self.projectile_list:
-                bullet.move()
+
+
+            # shoot a bullet in that direction
+            self.shoot()
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key.
@@ -187,9 +207,5 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
-
-        self.platform_physics_engine.update()
-        
-        # make bullets move
-        for bullet in self.projectile_list:
-            bullet.move()
+        self.projectile_list.update()
+        self.PHYSICS.update()
