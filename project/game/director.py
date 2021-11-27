@@ -132,7 +132,7 @@ class Director(arcade.Window):
         bullet.center_x = start_x
         bullet.center_y = start_y
         
-        bullet.set_bullet_velocity()
+        bullet.set_bullet_direction()
 
         if constants.DEBUG_MODE:
             print(f"shooting at direction: {bullet.get_orientation()}")
