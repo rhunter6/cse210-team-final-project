@@ -1,11 +1,10 @@
-from game.live_actor import LiveActor
+from game.actor import Actor
 from game import constants
 import arcade
 
-class Bullet(arcade.SpriteCircle, LiveActor):
-    def __init__(self, direction, radius =5, color="red", soft: bool = False):
+class Bullet(arcade.SpriteCircle, Actor):
+    def __init__(self, radius =5, color="red", soft: bool = False):
         super().__init__(radius, color, soft=soft)
-        self.set_orientation(direction)
 
     def move(self):
         if self._orientation == "UP":
@@ -16,3 +15,6 @@ class Bullet(arcade.SpriteCircle, LiveActor):
             self.change_X = -constants.BULLET_SPEED
         elif self._orientation == "RIGHT":
             self.change_X = constants.BULLET_SPEED
+
+    def set_orientation(self, orientation):
+        self._orientation = orientation

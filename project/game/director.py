@@ -1,5 +1,6 @@
 import arcade
 from game import constants
+from game.point import Point
 
 from game.live_actors.player import Player
 from game.live_actors.bullet import Bullet
@@ -58,7 +59,7 @@ class Director(arcade.Window):
         self.player_list.append(self.the_player)
 
         # platform
-        ground = Platform(800,50, color="white")
+        ground = Platform(constants.SCREEN_WIDTH, 15, color="white")
         ground.center_x = constants.SCREEN_WIDTH / 2
         ground.center_y = 25
         self.platform_list.append(ground)
@@ -100,15 +101,24 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
-    def shoot(self, direction):
+    def shoot(self, player_orientation, player_position):
         """ Shoots a single bullet
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
-        bullet = Bullet(direction)
-        bullet.position = self.the_player._get_position()
+        #bullet = Bullet()
+        #bullet.set_position(player_position)
+        
+
+        bullet = Bullet()
+
+        # set the position of the bullet
+        bullet._set_center_x( self.the_player._get_center_x() )
+        bullet._set_center_y( self.the_player._get_center_y() )
+
+        bullet.set_orientation(player_orientation)
 
         if constants.DEBUG_MODE:
             print(f"shooting at direction: {bullet.get_orientation()}")
@@ -116,7 +126,6 @@ class Director(arcade.Window):
         self.projectile_list.append(bullet)
         
         
-
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.
         ARGS:
@@ -144,8 +153,12 @@ class Director(arcade.Window):
 
         # SHOOTING
         elif key == arcade.key.SPACE:
+            # get where the player is facing
             orientation = self.the_player.get_orientation()
-            self.shoot(orientation)
+            position = self.the_player._get_position()
+            
+            # shoot a bullet in that direction
+            self.shoot(orientation, position)
 
         elif key == arcade.key.R:
             for bullet in self.projectile_list:
@@ -174,6 +187,9 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
+
         self.platform_physics_engine.update()
+        
+        # make bullets move
         for bullet in self.projectile_list:
-            bullet.update()
+            bullet.move()
