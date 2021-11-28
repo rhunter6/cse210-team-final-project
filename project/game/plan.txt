@@ -17,7 +17,7 @@ Player moves.(Move) this is the one that moves the player. it should move them l
 
 Director () This is how we control the sequence of play. 
         We need to wait on coding a director til we have the others made so
-        we don't struggle so badly with matching names.
+        we don't struggle so badly with matching names. tyyr
 
 Squares: 
     1. it needs to activate a random choice when you land on it.
@@ -28,7 +28,7 @@ Squares:
         4. nothing happens, move again
     maybe we should keep it simpler and just use a color for safe and a color for die. not
     make it as complicated as I originally wrote. 
-    we activate a square and it either turns purple or green. purple is die green is live.
+    we activate a square and it either turns purple or green. purple is die green is live. tyyr
 
 End game:
     1. lose - conditions
@@ -49,3 +49,4 @@ If there is something you want to add. add it here and itital it so we know who 
 
 If we need to rethink something to make it work better or if it's too complicated for whatever
 reason. make notes here. 
+ I started working on the game from bens files 11-27-2021 tyyr
