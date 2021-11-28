@@ -77,38 +77,52 @@ class Director(arcade.Window):
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
 
-        # platform
         POSITION = 0
         WIDTH = 1
         HEIGHT = 2
+        COLOR = 3
+
+        # platforms
 
         platforms_to_draw = [
-        #   [ Position (Point),                                    width (INT),                 height (INT) ]
-            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,         30 ],
-            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,         30 ],
-            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,         30 ],
-            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,         30 ],
+        #   [ Position (Point),                                    width (INT),                 height (INT), color ]
+            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,    30,  "white" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,    30,  "green" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,    30,  "yellow" ],
 
         ]
-        for platform in platforms_to_draw:
-            ground = Platform(platform[WIDTH], platform[HEIGHT], color="white")
+        for p in platforms_to_draw:
 
-            ground.center_x = platform[POSITION].get_x()
-            ground.center_y = platform[POSITION].get_y()
-            self.platform_list.append(ground)
+            width = p[WIDTH]
+            height = p[HEIGHT]
+            fill_color = p[COLOR]
+            x = p[POSITION].get_x()
+            y = p[POSITION].get_y()
+
+            platform = Platform(width, height, color=fill_color)
+            platform.center_x = x
+            platform.center_y = y
+            self.platform_list.append(platform)
 
         # walls
-        walls_to_draw = [   Point(10,200),
-                            Point(constants.SCREEN_WIDTH-10, 200) ]
+        walls_to_draw = [
+        #   [ Position (Point),                              width (INT),    height (INT),   color ]
+            [ Point(10,200),                                    20,            1200,        "blue"    ],
+            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "blue"    ]
+        ]
 
-        for point in walls_to_draw:
-            width = 20
-            height = 1200
-            wall_color = "white"
+        for w in walls_to_draw:
 
-            wall = Wall(width, height, color=wall_color)
-            wall.center_x = point.get_x()
-            wall.center_y = point.get_y()
+            width = w[WIDTH]
+            height = w[HEIGHT]
+            fill_color = w[COLOR]
+            x = w[POSITION].get_x()
+            y = w[POSITION].get_y()
+
+            wall = Wall(width, height, color=fill_color)
+            wall.center_x = x
+            wall.center_y = y
             self.wall_list.append(wall)
 
     def setup_physics(self):
