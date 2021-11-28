@@ -10,7 +10,11 @@ from arcade.sound import Sound, stop_sound
 
 
 class MenuView(arcade.View):
-    """ Class that manages the 'menu' view. """
+    '''
+    
+    Controls the initial menu and lets the user select the difficulty level for the game. 
+
+    '''
    
     def on_show(self):
         """ Called when switching to this view"""
