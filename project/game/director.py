@@ -2,11 +2,11 @@ import arcade
 from game import constants
 from game.point import Point
 
-from game.live_actors.player import Player
-from game.live_actors.bullet import Bullet
+from game.actors.player import Player
+from game.actors.bullet import Bullet
 
-from game.props.platform import Platform
-from game.props.wall import Wall
+from game.actors.platform import Platform
+from game.actors.wall import Wall
 
 
 class Director(arcade.Window):
@@ -34,13 +34,29 @@ class Director(arcade.Window):
         self.bullet_list = []
 
     def setup(self):
-        """ Initalize the game and creates the sprites.
+        """ Initalize the game
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
 
+        # create sprites
+        self.create_sprites()
+
+        # establish the laws of physics
+        self.setup_physics()
+
+        # Set the background color
+        arcade.set_background_color(arcade.color.JET)
+
+    def create_sprites(self):
+        """ Draw the sprites
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         # "actors"
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -53,45 +69,62 @@ class Director(arcade.Window):
         self.ladder_list = arcade.SpriteList()
         
         # player cannot move through these:
-        opaque_objects = [self.platform_list, self.wall_list]
+        self.solid_props = [self.platform_list, self.wall_list]
         
         # player
         self.the_player = Player(25, color="white")
         self.the_player.center_x = 200
-        self.the_player.center_y = 300
+        self.the_player.center_y = 100
         self.player_list.append(self.the_player)
 
         # platform
-        ground = Platform(constants.SCREEN_WIDTH, 15, color="white")
-        ground.center_x = constants.SCREEN_WIDTH / 2
-        ground.center_y = 25
-        self.platform_list.append(ground)
+        POSITION = 0
+        WIDTH = 1
+        HEIGHT = 2
+
+        platforms_to_draw = [
+        #   [ Position (Point),                                    width (INT),                 height (INT) ]
+            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,         30 ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,         30 ],
+            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,         30 ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,         30 ],
+
+        ]
+        for platform in platforms_to_draw:
+            ground = Platform(platform[WIDTH], platform[HEIGHT], color="white")
+
+            ground.center_x = platform[POSITION].get_x()
+            ground.center_y = platform[POSITION].get_y()
+            self.platform_list.append(ground)
 
         # walls
-        wall_x_list = [25, int(constants.SCREEN_WIDTH-25) ]
-        for x in wall_x_list:
-            wall = Wall(20, int(constants.SCREEN_HEIGHT/2), color="white")
-            wall.center_x = x
-            wall.center_y = int(constants.SCREEN_HEIGHT / 3)
+        walls_to_draw = [   Point(10,200),
+                            Point(constants.SCREEN_WIDTH-10, 200) ]
+
+        for point in walls_to_draw:
+            width = 20
+            height = 1200
+            wall_color = "white"
+
+            wall = Wall(width, height, color=wall_color)
+            wall.center_x = point.get_x()
+            wall.center_y = point.get_y()
             self.wall_list.append(wall)
 
-
+    def setup_physics(self):
         player_sprite = self.the_player
-        platforms = opaque_objects
+        platforms = self.solid_props
         gravity_constant = constants.GRAVITY
         ladders = self.ladder_list
 
-
         self.PHYSICS = arcade.PhysicsEnginePlatformer(  player_sprite,
-                                                                        platforms,
-                                                                        gravity_constant,
-                                                                        ladders
-                                                                    )
+                                                        platforms,
+                                                        gravity_constant,
+                                                        ladders
+                                                    )
 
-        self.PHYSICS.enable_multi_jump(2)
+        self.PHYSICS.enable_multi_jump(constants.DOUBLE_JUMP)
 
-        # Set the background color
-        arcade.set_background_color(arcade.color.JET)
 
     def on_draw(self):
         """
@@ -124,7 +157,6 @@ class Director(arcade.Window):
         # create the bullet
         bullet = Bullet()
 
-
         # position the bullet
         start_x = self.the_player.center_x
         start_y = self.the_player.center_y
@@ -141,10 +173,6 @@ class Director(arcade.Window):
 
         self.projectile_list.append(bullet)
 
-
-
-        
-        
         
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.

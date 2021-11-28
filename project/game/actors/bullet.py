@@ -11,19 +11,19 @@ class Bullet(arcade.SpriteCircle, Actor):
     def set_bullet_direction(self):
         
         if self._orientation == "UP":
-            self.change_X = 0
+            self.change_x = 0
             self.change_y = constants.BULLET_SPEED
 
         elif self._orientation == "DOWN":
-            self.change_X = 0
+            self.change_x = 0
             self.change_y = -constants.BULLET_SPEED
 
         elif self._orientation == "LEFT":
-            self.change_X = -constants.BULLET_SPEED
+            self.change_x = -constants.BULLET_SPEED
             self.change_y = 0
 
         elif self._orientation == "RIGHT":
-            self.change_X = constants.BULLET_SPEED
+            self.change_x = constants.BULLET_SPEED
             self.change_y = 0
 
         """
