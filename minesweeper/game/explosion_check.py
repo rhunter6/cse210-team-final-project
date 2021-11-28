@@ -2,6 +2,11 @@ import arcade
 from game import constants
 
 class ExplosionCheck:
+    '''
+    Checks to see if the grid box that was checked is a bomb
+o	If it is not a bomb it will also check to see how many bombs are touching the square and return that number
+
+    '''
 
     def check_right(location):
         

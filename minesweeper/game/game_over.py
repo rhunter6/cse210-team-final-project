@@ -1,7 +1,16 @@
 import arcade
 from game import menu_view
 from game import constants
+
+
 class GameOver(arcade.View):
+
+    '''
+    
+    This will either show a you win screen or a you lose screen depending on weather
+    you win or lose. 
+
+    '''
     def __init__(self):
         super().__init__()
         self.time_taken = 0

@@ -4,6 +4,12 @@ from game import constants
 from game.game_board import GameBoard 
 
 class SetupBoard(arcade.View):
+
+    '''
+    
+    Used to update constants that will be used for the game and create the game board screen
+    
+    '''
     def __init__(self, difficulty):
         super().__init__()
         

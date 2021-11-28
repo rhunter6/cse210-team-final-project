@@ -2,6 +2,12 @@ import arcade
 from game import constants
  
 class MovePiece:
+
+    '''
+    
+    Moves the sprites that are on the grid according to what the explosion check returns
+    
+    '''
     def __init__(self,) -> None:
         self.move_piece()
 
