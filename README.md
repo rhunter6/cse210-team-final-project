@@ -44,36 +44,60 @@ root                    (project root folder)
 
 ## Features to Include 
 ---
-THIS SECTION IS TABBED OUT TO BE EASIER TO READ IF YOU DOWNLOAD IT OR HIT THE EDIT BUTTON!
-
+Features to Include 
 #1 = must have
 #2 = nice to have
 #3 = just for fun if there is time
 
 Start Screen #1
-    select grid size #2
-    start button #1
-    game instructions #1
-
+•	Select custom grid size and number of mines #3
+•	select grid size by difficulty #2 (DONE)
+•	start button #1 (DONE integrated into difficulty selection button)
+•	game instructions #1 (DONE)
 Grid Screen (Game Board) #1
-    grid #1
-    mines #1
-    clues #1
-        these are the numbers that will surround the mines
-    scoreboard #1
-        count of flags remaining #2
-        count of mines remaining #2
-    reset button #1
-        make button interactive when clicked #3
-            on click #3
-            after click still alive #3
-            after click dead #3 
+•	grid #1 (DONE)
+•	mines #1(DONE)
+•	clues #1(DONE)
+o	these are the numbers that will surround the mines
+•	Show multiple boxes if a grid box is checked that is not touching any bombs. #3 
+•	Right Click features #2
+o	Right click to plant flag 
+o	Second Right Click adds “? “
+o	Third right click returns to default
+
+Scoreboard #1
+•	count of flags remaining #2
+•	Add a timer that shows how long the game has been going. #3
+•	count of mines remaining #2  (REMOVED because it would tell the user if they guessed right or not.)
+Reset button #1
+•	make button interactive when clicked #3
+o	on click #3
+o	after click still alive #3
+o	after click dead #3 
 
 Win Screen #1
-    make it a fun screen with a guy that digs up all of the mines #3
+•	make it a fun screen with a guy that digs up all of the mines #3
 
 Lose Screen #1
-    make it a fun scene #3
+•	make it a fun scene #3
+
+Classes
+	MenuView
+	    Controls the initial menu and lets the user select the difficulty level for the game. 
+	SetupBoard
+	    Used to update constants that will be used for the game and create the game board screen
+	Constants
+    	Not a class but is used to store the information used during gameplay. 
+	GameBoard (this acts as our “Director” Class)
+    	This is the main grid where the game is played
+	ExplosionCheck
+    	Checks to see if the grid box that was checked is a bomb
+    	If it is not a bomb it will also check to see how many bombs are touching the square and return that number
+	MovePiece
+    	Moves the sprites that are on the grid according to what the explosion check returns
+	GameOver
+    	This will either show a you win screen or a you lose screen depending on weather you win or lose. 
+
 
 ## Timeline
 ---
