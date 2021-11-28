@@ -1,4 +1,4 @@
-from game.explodingcheckers import ExplodingCheckers
+from game.checkers import ExplodingCheckers
 import constants
 import arcade
 
