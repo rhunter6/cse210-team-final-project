@@ -1,5 +1,3 @@
-
-
 class LiveActor():
     def __init__(self) -> None:
         pass
