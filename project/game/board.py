@@ -30,8 +30,8 @@ class Board(arcade.Window):
         for row in range(row_count):
             self.grid.append([]) #an empty aray that holds each cell in the row
 
-        for column in range(column_count):
-            self.grid[row].append(0) #append to a cell, I don't know why this works. 
+            for column in range(column_count):
+                self.grid[row].append(0) #append to a cell, I don't know why this works. 
                                     #I didn't write this one.
         
         arcade.set_background_color(arcade.color.BLACK) #the white boxes will sit on the black
@@ -45,7 +45,7 @@ class Board(arcade.Window):
                 #if you change it to a sprite list you can change things based on the list
                 #not the coridinates. I think.. I'm not 100% clear yet.
                 position = row * column_count + column
-                if self.grid[row][column].color == 1:
+                if self.grid[row][column] == 1:
                     self.grid_sprite_list[position].color =arcade.color.PURPLE
                 else:
                     self.grid_sprite_list[position].color = arcade.color.GREEN
