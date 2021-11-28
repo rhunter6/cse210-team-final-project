@@ -22,6 +22,18 @@ class Move(arcade.Window) :
         self.up_pressed = False
         self.down_pressed = False 
         
+    def setup(self):
+        """Set up the game and initialize the variables."""
+        
+        self.player_list = arcade.SpriteList()
+        
+    def on_draw(self):
+        """
+        Render the screen 
+        """
+        arcade.start_render()
+        
+        self.player_sprite.draw()
         
     pass
     
