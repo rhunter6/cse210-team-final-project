@@ -58,12 +58,18 @@ class Game(arcade.Window):
         for row in range(row_count):
             for column in range(column_count):
                 #what color is box
-                if self.grid[row][column] == 1:
+                # if self.grid[row][column] == 1:
+                #     color = arcade.color.GREEN
+                # if self.grid[row][column] == 2:
+                #     color = arcade.color.PURPLE
+                # else:
+                #     color = arcade.color.WHITE
+                if self.grid[row][column]== 0:
+                    color = arcade.color.WHITE
+                if self.grid[row][column]== 1:
                     color = arcade.color.GREEN
                 if self.grid[row][column] == 2:
-                    color = arcade.color.PURPLE
-                else:
-                    color = arcade.color.WHITE
+                    color = arcade.color.PURPLE    
                 #math to figure out were box is
                 y = (margin +width) * column + margin+width // 2
                 x = (margin + height) * row + margin +height // 2
@@ -85,14 +91,17 @@ class Game(arcade.Window):
         #make sure you are on grid. It is possible to  click in the upper right
         #corner in the margin and go to a grid location that doesn't exist #fix that later
         if row < row_count and column < column_count:
-            self.grid[row][column] == random.choice([1,2])
+            print("hello")
+            self.grid[row][column] = random.choice([0,1,2])
             if self.grid[row][column] == 1:
-                self.grid[row][column] =1
+                print("second")
+                self.grid[row][column] = 1
                 #play again
             if self.grid[row][column] ==2:
-                self.grid[row][column] =2
+                print("third")
+                self.grid[row][column] = 2
                 #end game    
-
+            
     
 def main():
 
