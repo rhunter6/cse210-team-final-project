@@ -73,7 +73,8 @@ class ExplodingCheckers(arcade.Window):
             self.win_screen = arcade.Sprite("./killerchess/Assets/R.png")
             self.win_screen.set_position(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2)
             self.tile_list.append(self.win_screen)
-  
+
+            arcade.schedule(arcade.close_window, 3)
         
         for i in range(0, len(self.tile_list) - 2):
             if arcade.check_for_collision(self.player, self.tile_list[i]) == True:
