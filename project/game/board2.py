@@ -92,16 +92,22 @@ class Game(arcade.Window):
         #corner in the margin and go to a grid location that doesn't exist #fix that later
         if row < row_count and column < column_count:
             print("hello")
-            self.grid[row][column] = random.choice([0,1,2])
+            self.grid[row][column] = random.choice([1,2])
             if self.grid[row][column] == 1:
-                print("second")
+                print("Safe, move again")
                 self.grid[row][column] = 1
                 #play again
             if self.grid[row][column] ==2:
-                print("third")
+                print("bang you're dead")
                 self.grid[row][column] = 2
-                #end game    
-            
+                arcade.close_window() 
+        
+
+        #     if on_mouse_press() == 1:
+        #         print("safe, move again")  
+        #     if on_mouse_press() == 2:
+        #         arcade.close_window()
+        #     print("game over")    
     
 def main():
 
