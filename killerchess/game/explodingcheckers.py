@@ -88,7 +88,7 @@ class ExplodingCheckers(arcade.Window):
             self.lose_screen.set_position(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2)
             self.tile_list.append(self.lose_screen)
             
-            arcade.schedule(arcade.close_window, 5)
+            arcade.schedule(arcade.close_window, 3)
             
 
      
