@@ -1,9 +1,13 @@
 import arcade
 from game import constants
-from game.game_objects.player import Player
-from game.game_objects.platform import Platform
-from game.game_objects.wall import Wall
-from game.game_objects.projectiles import Bullet
+from game.point import Point
+
+from game.actors.player import Player
+from game.actors.bullet import Bullet
+
+from game.actors.platform import Platform
+from game.actors.wall import Wall
+
 
 class Director(arcade.Window):
     """ Main application class. """
@@ -26,14 +30,33 @@ class Director(arcade.Window):
         self.wall_list = []
         self.ladder_list = []
 
+        # TESTING
+        self.bullet_list = []
+
     def setup(self):
-        """ Initalize the game and creates the sprites.
+        """ Initalize the game
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
 
+        # create sprites
+        self.create_sprites()
+
+        # establish the laws of physics
+        self.setup_physics()
+
+        # Set the background color
+        arcade.set_background_color(arcade.color.JET)
+
+    def create_sprites(self):
+        """ Draw the sprites
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         # "actors"
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -46,35 +69,76 @@ class Director(arcade.Window):
         self.ladder_list = arcade.SpriteList()
         
         # player cannot move through these:
-        opaque_objects = [self.platform_list, self.wall_list]
+        self.solid_props = [self.platform_list, self.wall_list]
         
         # player
         self.the_player = Player(25, color="white")
         self.the_player.center_x = 200
-        self.the_player.center_y = 300
+        self.the_player.center_y = 100
         self.player_list.append(self.the_player)
 
-        # platform
-        ground = Platform(800,50, color="white")
-        ground.center_x = constants.SCREEN_WIDTH / 2
-        ground.center_y = 25
-        self.platform_list.append(ground)
+        POSITION = 0
+        WIDTH = 1
+        HEIGHT = 2
+        COLOR = 3
+
+        # platforms
+
+        platforms_to_draw = [
+        #   [ Position (Point),                                    width (INT),                 height (INT), color ]
+            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,    30,  "white" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,    30,  "green" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,    30,  "yellow" ],
+
+        ]
+        for p in platforms_to_draw:
+
+            width = p[WIDTH]
+            height = p[HEIGHT]
+            fill_color = p[COLOR]
+            x = p[POSITION].get_x()
+            y = p[POSITION].get_y()
+
+            platform = Platform(width, height, color=fill_color)
+            platform.center_x = x
+            platform.center_y = y
+            self.platform_list.append(platform)
 
         # walls
-        wall_x_list = [25, int(constants.SCREEN_WIDTH-25) ]
-        for x in wall_x_list:
-            wall = Wall(20, int(constants.SCREEN_HEIGHT/2), color="white")
+        walls_to_draw = [
+        #   [ Position (Point),                              width (INT),    height (INT),   color ]
+            [ Point(10,200),                                    20,            1200,        "blue"    ],
+            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "blue"    ]
+        ]
+
+        for w in walls_to_draw:
+
+            width = w[WIDTH]
+            height = w[HEIGHT]
+            fill_color = w[COLOR]
+            x = w[POSITION].get_x()
+            y = w[POSITION].get_y()
+
+            wall = Wall(width, height, color=fill_color)
             wall.center_x = x
-            wall.center_y = int(constants.SCREEN_HEIGHT / 3)
+            wall.center_y = y
             self.wall_list.append(wall)
 
-        self.platform_physics_engine = arcade.PhysicsEnginePlatformer(self.the_player,
-                                                            opaque_objects,
-                                                            constants.GRAVITY,
-                                                            ladders=self.ladder_list)
+    def setup_physics(self):
+        player_sprite = self.the_player
+        platforms = self.solid_props
+        gravity_constant = constants.GRAVITY
+        ladders = self.ladder_list
 
-        # Set the background color
-        arcade.set_background_color(arcade.color.JET)
+        self.PHYSICS = arcade.PhysicsEnginePlatformer(  player_sprite,
+                                                        platforms,
+                                                        gravity_constant,
+                                                        ladders
+                                                    )
+
+        self.PHYSICS.enable_multi_jump(constants.DOUBLE_JUMP)
+
 
     def on_draw(self):
         """
@@ -97,17 +161,33 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
-    def shoot(self, direction):
-        """ Put the code that handles the shooting here
+    def shoot(self):
+        """ Shoots a single bullet
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
-        bullet = Bullet(direction)
-        bullet.position = self.the_player._get_position()
+        # create the bullet
+        bullet = Bullet()
+
+        # position the bullet
+        start_x = self.the_player.center_x
+        start_y = self.the_player.center_y
+        bullet.center_x = start_x
+        bullet.center_y = start_y
+        
+        # make the bullet go in the direction the player is facing
+        orientation = self.the_player.get_orientation()
+        bullet.set_orientation(orientation)
+        bullet.set_bullet_direction()
+
+        if constants.DEBUG_MODE:
+            print(f"shooting at direction: {bullet.get_orientation()}")
+
         self.projectile_list.append(bullet)
 
+        
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.
         ARGS:
@@ -118,22 +198,29 @@ class Director(arcade.Window):
 
         # BASIC DIRECTIONS
         if key == arcade.key.UP:
-            self.the_player.change_y = constants.MOVEMENT_SPEED
-            self.the_player.set_orientation("UP")
+            if self.PHYSICS.can_jump():
+                self.the_player.change_y = constants.MOVEMENT_SPEED
+                self.the_player.set_orientation("UP")
+
+                # track jump count for multijump
+                self.PHYSICS.increment_jump_counter()
+
         elif key == arcade.key.DOWN:
             self.the_player.change_y = -constants.MOVEMENT_SPEED
             self.the_player.set_orientation("DOWN")
+
         elif key == arcade.key.LEFT:
             self.the_player.change_x = -constants.MOVEMENT_SPEED
             self.the_player.set_orientation("LEFT")
+
         elif key == arcade.key.RIGHT:
             self.the_player.change_x = constants.MOVEMENT_SPEED
             self.the_player.set_orientation("RIGHT")
 
         # SHOOTING
         elif key == arcade.key.SPACE:
-            orientation = self.the_player.get_orientation()
-            self.shoot(orientation)
+            # shoot a bullet
+            self.shoot()
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key.
@@ -148,9 +235,8 @@ class Director(arcade.Window):
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.the_player.change_x = 0
 
-    def do_updates(self, delta_time):
-        for projectile in self.projectile_list:
-            projectile.update()
+
+    
 
     def on_update(self, delta_time):
         """ Does physics and other updates
@@ -159,4 +245,5 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
-        self.platform_physics_engine.update()
+        self.projectile_list.update()
+        self.PHYSICS.update()
