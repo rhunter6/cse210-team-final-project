@@ -83,11 +83,12 @@ class GameBoard(arcade.View):
                 self.grid_sprite_list.append(new_sprite)
 
                 if test_value == "bomb":
-                    GameOver()
+                   # GameOver()
+                
 
                 #add a check for bomb and call end of game HERE
-                endGame = GameOver()
-                self.window.show_view(endGame) #only for testing, erease it and create a check.              
+                    endGame = GameOver()
+                    self.window.show_view(endGame) #only for testing, erease it and create a check.              
                 
             
                 
