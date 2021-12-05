@@ -76,9 +76,9 @@ class GameBoard(arcade.View):
         # corner in the margin and go to a grid location that doesn't exist
         
         if row < constants.ROW_COUNT and column < constants.COLUMN_COUNT:          
-            if button == arcade.MOUSE_BUTTON_LEFT:    
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                    
                 test_value = ExplosionCheck.check_left(location, row, column )
-
                 new_sprite = MovePiece.move_piece(row,column, test_value)
                 self.grid_sprite_list.append(new_sprite)
 
@@ -86,6 +86,9 @@ class GameBoard(arcade.View):
                     GameOver()
 
                 #add a check for bomb and call end of game HERE
+                endGame = GameOver()
+                self.window.show_view(endGame) #only for testing, erease it and create a check.              
+                
             
                 
             if button == arcade.MOUSE_BUTTON_RIGHT:               
@@ -103,5 +106,5 @@ class GameBoard(arcade.View):
                     new_sprite = MovePiece.move_piece(row,column, "default")
                     self.grid_sprite_list.append(new_sprite)
             #for testing remove
-            print(test_value)
-            print(constants.MINE_FIELD)
+            # print(test_value)
+            # print(constants.MINE_FIELD)
