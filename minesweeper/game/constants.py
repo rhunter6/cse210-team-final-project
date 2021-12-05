@@ -14,6 +14,8 @@ HEADER = 100
 #number of mines
 MINECOUNT = 0
 
+FLAGS_REMAINING = 0
+
 #mine Locations
 MINE_LOCATIONS = []
 

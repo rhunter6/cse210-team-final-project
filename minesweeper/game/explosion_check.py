@@ -12,6 +12,7 @@ o	If it is not a bomb it will also check to see how many bombs are touching the 
         
         if constants.MINE_FIELD[location] == "f":
             constants.MINE_FIELD[location] = "?" 
+            constants.FLAGS_REMAINING += 1 
             print(f"TESTING location {location}") # FOR TESTING REMOVE
             return "?"
 
@@ -21,14 +22,19 @@ o	If it is not a bomb it will also check to see how many bombs are touching the 
             return "n"
 
         if constants.MINE_FIELD[location] == "n":
-            constants.MINE_FIELD[location] = "f" 
+            constants.MINE_FIELD[location] = "f"
+            constants.FLAGS_REMAINING -= 1 
             print(f"TESTING location {location}") # FOR TESTING REMOVE
             return "f"
 
     def check_left(location, row, column): 
         print (f"Location: {location}, Row: {row}, Column: {column}") # FOR TESTING REMOVE
         #is it a bomb?
-        if location in constants.MINE_LOCATIONS:
+        
+        if constants.MINE_FIELD[location] == "f":
+            return "flag"
+
+        elif location in constants.MINE_LOCATIONS:
             return "bomb"
 
         else:

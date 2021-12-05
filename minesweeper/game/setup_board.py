@@ -14,9 +14,10 @@ class SetupBoard(arcade.View):
         super().__init__()
         
         if difficulty == "easy":
-            constants.ROW_COUNT = 3 #9
-            constants.COLUMN_COUNT = 3#9
-            constants.MINECOUNT = 3#10
+            constants.ROW_COUNT = 10
+            constants.COLUMN_COUNT = 10
+            constants.MINECOUNT = 10
+            constants.FLAGS_REMAINING = 10
             constants.GRID_SIZE = constants.ROW_COUNT * constants.COLUMN_COUNT
             self.add_bombs(constants.MINECOUNT, constants.GRID_SIZE)
             self.create_minefield(constants.GRID_SIZE)
@@ -25,6 +26,7 @@ class SetupBoard(arcade.View):
             constants.ROW_COUNT = 16
             constants.COLUMN_COUNT = 16
             constants.MINECOUNT = 40
+            constants.FLAGS_REMAINING = 40
             constants.GRID_SIZE = constants.ROW_COUNT * constants.COLUMN_COUNT
             self.add_bombs(constants.MINECOUNT,constants.GRID_SIZE)
             self.create_minefield(constants.GRID_SIZE)
@@ -33,6 +35,7 @@ class SetupBoard(arcade.View):
             constants.ROW_COUNT = 16
             constants.COLUMN_COUNT = 30
             constants.MINECOUNT = 99
+            constants.FLAGS_REMAINING = 99
             constants.GRID_SIZE = constants.ROW_COUNT * constants.COLUMN_COUNT
             self.add_bombs(constants.MINECOUNT, constants.GRID_SIZE)
             self.create_minefield(constants.GRID_SIZE)
@@ -46,6 +49,7 @@ class SetupBoard(arcade.View):
                 if bomb_number in constants.MINE_LOCATIONS:
                     continue
                 else:
+                    #variable called mine locations
                     constants.MINE_LOCATIONS.append(bomb_number)
                     mine_count -= 1
 

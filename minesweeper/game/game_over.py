@@ -14,6 +14,9 @@ class GameOver(arcade.View):
     def __init__(self):
         super().__init__()
         self.time_taken = 0
+        print("game overrrrrr")
+        
+        self.on_draw()
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
