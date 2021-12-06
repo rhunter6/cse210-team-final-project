@@ -11,9 +11,9 @@ class GameOver(arcade.View):
     you win or lose. 
 
     '''
-    def __init__(self):
+    def __init__(self, time):
         super().__init__()
-        self.time_taken = 0
+        self.time_taken = time
         print("game overrrrrr")
         
         self.on_draw()
