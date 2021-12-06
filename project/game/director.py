@@ -30,8 +30,7 @@ class Director(arcade.Window):
         self.wall_list = []
         self.ladder_list = []
 
-        # TESTING
-        self.bullet_list = []
+        self.current_level = 1
 
     def setup(self):
         """ Initalize the game
@@ -70,9 +69,14 @@ class Director(arcade.Window):
         
         # player cannot move through these:
         self.solid_props = [self.platform_list, self.wall_list]
+
+        if self.current_level == 1:
+            self.level_01_sprites()
         
+    def level_01_sprites(self):
+
         # player
-        self.the_player = Player(25, color="white")
+        self.the_player = Player(10, color="white")
         self.the_player.center_x = 200
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
@@ -90,8 +94,8 @@ class Director(arcade.Window):
             [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,    30,  "green" ],
             [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,    30,  "black" ],
             [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,    30,  "yellow" ],
-
         ]
+
         for p in platforms_to_draw:
 
             width = p[WIDTH]
@@ -124,6 +128,8 @@ class Director(arcade.Window):
             wall.center_x = x
             wall.center_y = y
             self.wall_list.append(wall)
+            
+
 
     def setup_physics(self):
         player_sprite = self.the_player
@@ -138,6 +144,7 @@ class Director(arcade.Window):
                                                     )
 
         self.PHYSICS.enable_multi_jump(constants.DOUBLE_JUMP)
+
 
 
     def on_draw(self):
@@ -234,9 +241,6 @@ class Director(arcade.Window):
             self.the_player.change_y = 0
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.the_player.change_x = 0
-
-
-    
 
     def on_update(self, delta_time):
         """ Does physics and other updates
