@@ -40,3 +40,4 @@ class Bullet(arcade.SpriteCircle, Actor):
 
     def set_orientation(self, orientation):
         self._orientation = orientation
+

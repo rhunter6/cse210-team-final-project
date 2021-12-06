@@ -11,6 +11,7 @@ from game.actors.wall import Wall
 from game.actors.ladder import Ladder
 
 
+
 class Director(arcade.Window):
     """ Main application class. """
 
@@ -76,8 +77,6 @@ class Director(arcade.Window):
             self.level_01_sprites()
         
     def level_01_sprites(self):
-
-
 
         POSITION = 0
         WIDTH = 1
@@ -218,7 +217,6 @@ class Director(arcade.Window):
             print(f"shooting at direction: {bullet.get_orientation()}")
 
         self.projectile_list.append(bullet)
-
         
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed.
