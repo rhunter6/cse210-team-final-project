@@ -7,6 +7,7 @@ from arcade.draw_commands import draw_rectangle_filled, draw_xywh_rectangle_fill
 from arcade.text_pyglet import draw_text
 from game.explosion_check import ExplosionCheck
 from game.game_over import GameOver
+import datetime
 
 
 class GameBoard(arcade.View):
@@ -18,6 +19,9 @@ class GameBoard(arcade.View):
 
     def __init__(self):
         super().__init__()
+        
+        self.startTime = datetime.datetime.now()
+        self.secondsToLoose = None
         
         arcade.set_background_color(arcade.color.LIGHT_GRAY)
         
@@ -60,11 +64,25 @@ class GameBoard(arcade.View):
             left_box_y = constants.START_SCREEN_HEIGHT - 30
             draw_text(f"{constants.FLAGS_REMAINING} FLAGS RAMAINING",left_box_x,left_box_y,RED,19,250,"center",bold=True)
             
+            if self.secondsToLoose:
+                arcade.draw_text("You loose! Click to continue.",
+                        0,
+                        70,
+                        arcade.color.RED,
+                        30,
+                        width=constants.START_SCREEN_WIDTH,
+                        align="center")
+            
     def on_mouse_press(self, x, y, button, modifiers):
         """
         Called when the user presses a mouse button.
         """
 
+        if self.secondsToLoose:
+            game_over = GameOver(self.secondsToLoose)
+            game_over.on_draw()
+            self.window.show_view(game_over)
+            
         # Change the x/y screen coordinates to grid coordinates
         column = int(x // (constants.WIDTH + constants.MARGIN))
         row = int(y // (constants.HEIGHT + constants.MARGIN))
@@ -83,12 +101,7 @@ class GameBoard(arcade.View):
                 self.grid_sprite_list.append(new_sprite)
 
                 if test_value == "bomb":
-                   # GameOver()
-                
-
-                #add a check for bomb and call end of game HERE
-                    endGame = GameOver()
-                    self.window.show_view(endGame) #only for testing, erease it and create a check.              
+                    self.secondsToLoose = (datetime.datetime.now() - self.startTime).total_seconds()        
                 
             
                 
