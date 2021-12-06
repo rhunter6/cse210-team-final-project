@@ -2,11 +2,13 @@ import arcade
 from game import constants
 from game.point import Point
 
+from game.actor import Actor
 from game.actors.player import Player
 from game.actors.bullet import Bullet
 
 from game.actors.platform import Platform
 from game.actors.wall import Wall
+from game.actors.ladder import Ladder
 
 
 class Director(arcade.Window):
@@ -75,11 +77,7 @@ class Director(arcade.Window):
         
     def level_01_sprites(self):
 
-        # player
-        self.the_player = Player(10, color="white")
-        self.the_player.center_x = 200
-        self.the_player.center_y = 100
-        self.player_list.append(self.the_player)
+
 
         POSITION = 0
         WIDTH = 1
@@ -90,10 +88,10 @@ class Director(arcade.Window):
 
         platforms_to_draw = [
         #   [ Position (Point),                                    width (INT),                 height (INT), color ]
-            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,    30,  "white" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,    30,  "green" ],
-            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,    30,  "black" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,    30,  "yellow" ],
+            [ Point(constants.SCREEN_WIDTH/2, 15),              constants.SCREEN_WIDTH,    30,  "brown" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 215),       constants.SCREEN_WIDTH,    30,  "brown" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), 415),       constants.SCREEN_WIDTH,    30,  "brown" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), 615),       constants.SCREEN_WIDTH,    30,  "brown" ],
         ]
 
         for p in platforms_to_draw:
@@ -128,7 +126,35 @@ class Director(arcade.Window):
             wall.center_x = x
             wall.center_y = y
             self.wall_list.append(wall)
-            
+
+        # ladders
+        ladders_to_draw = [
+        #   [ Position (Point),                              width (INT),    height (INT),   color ]
+            [ Point(150,200),                                    20,            1200,        "green"    ],
+            [ Point(constants.SCREEN_WIDTH-100, 200),            20,            1200,        "green"    ]
+        ]
+
+        for l in ladders_to_draw:
+
+            width = l[WIDTH]
+            height = l[HEIGHT]
+            fill_color = l[COLOR]
+            x = l[POSITION].get_x()
+            y = l[POSITION].get_y()
+
+            wall = Ladder(width, height, color=fill_color)
+            wall.center_x = x
+            wall.center_y = y
+            self.ladder_list.append(wall)
+
+        # enemies
+
+
+        # player
+        self.the_player = Player(10, color="white")
+        self.the_player.center_x = 200
+        self.the_player.center_y = 100
+        self.player_list.append(self.the_player)
 
 
     def setup_physics(self):
@@ -144,7 +170,6 @@ class Director(arcade.Window):
                                                     )
 
         self.PHYSICS.enable_multi_jump(constants.DOUBLE_JUMP)
-
 
 
     def on_draw(self):
@@ -207,14 +232,16 @@ class Director(arcade.Window):
         if key == arcade.key.UP:
             if self.PHYSICS.can_jump():
                 self.the_player.change_y = constants.MOVEMENT_SPEED
-                self.the_player.set_orientation("UP")
+                
+                # removed shooting up and down
+                #self.the_player.set_orientation("UP")
 
                 # track jump count for multijump
                 self.PHYSICS.increment_jump_counter()
 
         elif key == arcade.key.DOWN:
             self.the_player.change_y = -constants.MOVEMENT_SPEED
-            self.the_player.set_orientation("DOWN")
+            #self.the_player.set_orientation("DOWN")
 
         elif key == arcade.key.LEFT:
             self.the_player.change_x = -constants.MOVEMENT_SPEED
