@@ -51,3 +51,17 @@ class Actor():
 
     def do_updates():
         pass
+
+
+    # hp functions
+    def get_hp(self):
+        return self._hp
+
+    def set_hp(self, new_hp):
+        self._hp = new_hp
+
+    def change_hp(self, hp_change):
+        self._hp = self._hp + hp_change
+
+    def debug_console_hp(self):
+        print(self._hp)
