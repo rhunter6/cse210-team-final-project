@@ -1,4 +1,5 @@
 import arcade
+import sys
 from game import constants
 from game.point import Point
 
@@ -139,7 +140,11 @@ class Director(arcade.Window):
         # ladders
         ladders_to_draw = [
         #   [ Position (Point),                                             width (INT),    height (INT),   color ]
-            [ Point(constants.SCREEN_WIDTH-190, platform_0_height+105),            20,            150,        "green"    ]
+            [ Point(constants.SCREEN_WIDTH-190, platform_0_height+105),            20,            150,        "green"    ],
+            [ Point(190,                        platform_1_height+105),            20,            150,        "green"    ],
+            [ Point(constants.SCREEN_WIDTH-190, platform_2_height+105),            20,            150,        "green"    ],
+            [ Point(190,                        platform_3_height+105),            20,            150,        "green"    ],
+            [ Point(constants.SCREEN_WIDTH-190, platform_4_height+105),            20,            150,        "green"    ],
         ]
 
         for l in ladders_to_draw:
@@ -160,22 +165,18 @@ class Director(arcade.Window):
         #   [ Position (Point),                              width (INT),    height (INT),   color ]
             [ Point(500, platform_0_height+80),                 100,            100,        "black"    ],
             [ Point(800, platform_0_height+80),                 100,            100,        "black"    ],
-            [ Point(200, platform_1_height+80),                 100,            100,        "black"    ],
-            [ Point(700, platform_1_height+80),                 100,            100,        "black"    ],
-            [ Point(200, platform_2_height+80),                 100,            100,        "black"    ],
+            [ Point(500, platform_1_height+80),                 100,            100,        "black"    ],
+            [ Point(800, platform_1_height+80),                 100,            100,        "black"    ],
             [ Point(400, platform_2_height+80),                 100,            100,        "black"    ],
+            [ Point(600, platform_2_height+80),                 100,            100,        "black"    ],
             [ Point(800, platform_2_height+80),                 100,            100,        "black"    ],
-            [ Point(200, platform_3_height+80),                 100,            100,        "black"    ],
+            [ Point(400, platform_3_height+80),                 100,            100,        "black"    ],
             [ Point(600, platform_3_height+80),                 100,            100,        "black"    ],
             [ Point(300, platform_4_height+80),                 100,            100,        "black"    ],
             [ Point(500, platform_4_height+80),                 100,            100,        "black"    ],
             [ Point(900, platform_4_height+80),                 100,            100,        "black"    ],
             [ Point(450, platform_5_height+80),                 100,            100,        "black"    ],
-            [ Point(750, platform_5_height+80),                 100,            100,        "black"    ],
-            #[ Point(500, 140),                                    100,            100,        "black"    ],
-            #[ Point(500,100),                                    100,            100,        "black"    ],
-            #[ Point(500,100),                                    100,            100,        "black"    ],
-            #[ Point(500,100),                                    100,            100,        "black"    ],
+            [ Point(750, platform_5_height+80),                 100,            100,        "black"    ]
         ]
 
         for e in enemies_to_draw:
@@ -186,10 +187,10 @@ class Director(arcade.Window):
             x = e[POSITION].get_x()
             y = e[POSITION].get_y()
 
-            wall = Enemy(width, height, color=fill_color)
-            wall.center_x = x
-            wall.center_y = y
-            self.ladder_list.append(wall)
+            enemy = Enemy(width, height, color=fill_color)
+            enemy.center_x = x
+            enemy.center_y = y
+            self.enemy_list.append(enemy)
 
         # player
         self.the_player = Player(10, color="white")
@@ -309,6 +310,47 @@ class Director(arcade.Window):
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.the_player.change_x = 0
 
+    def check_collisions(self):
+
+        for bullet in self.projectile_list:
+
+            # bullet-wall collision
+            is_colliding_with_wall = arcade.check_for_collision_with_list(bullet, self.wall_list)
+            if is_colliding_with_wall:
+                self.destroy_bullet(bullet)
+                self.debug_console('BULLET colliding with WALL')
+
+            # bullet-enemy collision
+            for enemy in self.enemy_list:
+                is_colliding_with_enemy = arcade.check_for_collision(bullet, enemy)
+                if is_colliding_with_enemy:
+                    self.destroy_bullet(bullet)
+                    enemy.change_hp(-1)
+                    enemy_hp = enemy.get_hp()
+                    self.debug_console('BULLET colliding with ENEMY')
+                    self.debug_console(f'ENEMY._hp = {enemy_hp}')
+
+        # player-enemy collision
+        for enemy in self.enemy_list:
+            is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
+            if is_colliding_with_enemy:
+                self.debug_console(f'GAME OVER')
+                sys.exit()
+            
+    def check_for_enemy_deaths(self):
+        """ Checks for enemies with 0 HP and removes them from play
+        """
+        for enemy in self.enemy_list:
+            hp = enemy.get_hp()
+            if hp == 0:
+                self.enemy_list.remove(enemy)
+
+
+    def destroy_bullet(self, bullet):
+        """ Destroys a bullet
+        """
+        self.projectile_list.remove(bullet)
+
     def on_update(self, delta_time):
         """ Does physics and other updates
         ARGS:
@@ -316,5 +358,11 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
+        self.check_collisions()
+        self.check_for_enemy_deaths()
         self.projectile_list.update()
         self.PHYSICS.update()
+
+    def debug_console(self,string):
+        if constants.DEBUG_MODE:
+            print(string)
