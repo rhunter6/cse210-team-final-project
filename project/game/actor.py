@@ -1,6 +1,6 @@
 import arcade
-from point import Point
-from velocity import Velocity
+from game.point import Point
+from game.velocity import Velocity
 
 class Actor(): 
     def __init__(self):
@@ -10,7 +10,7 @@ class Actor():
         self.alive = True
         self.rotate = 0.0
         self.angle = 0.0
-        self.points = 0.0
+        self.points = 0.0        
         
     def advance(self):
         self.center.x += self.velocity.dx
@@ -26,3 +26,42 @@ class Actor():
             self.center.y = 0
         elif self.center.y < 0:
             self.center.y = screen_height
+
+    def set_orientation(self, orientation):
+        """ Make the actor face a certain direction
+        ARGS:
+            self (LiveActor): an instance of Player
+            direction (string): should be in [ "UP", "DOWN", "LEFT", "RIGHT" ]
+        """
+        orientation = orientation.upper()
+
+        if orientation in [ "UP", "DOWN", "LEFT", "RIGHT" ]:
+            self._orientation = orientation
+        else:
+            self._orientation = "RIGHT"
+        
+    def get_orientation(self):
+        """ Returns the orientation
+        ARGS:
+            self (LiveActor):
+        RETURNS:
+            orientation (STR)
+        """
+        return self._orientation
+
+    def do_updates():
+        pass
+
+
+    # hp functions
+    def get_hp(self):
+        return self._hp
+
+    def set_hp(self, new_hp):
+        self._hp = new_hp
+
+    def change_hp(self, hp_change):
+        self._hp = self._hp + hp_change
+
+    def debug_console_hp(self):
+        print(self._hp)
