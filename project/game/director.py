@@ -191,14 +191,16 @@ class Director(arcade.Window):
             fill_color = e[COLOR]
             x = e[POSITION].get_x()
             y = e[POSITION].get_y()
-
+            
             enemy = Enemy(width, height, color=fill_color)
             enemy.center_x = x
             enemy.center_y = y
             self.enemy_list.append(enemy)
 
         # player
+        player_img = "project/game/assets/images/robot1.png"
         self.the_player = Player(10, color="white")
+        self.the_player = arcade.Sprite(player_img, 0.5)
         self.the_player.center_x = 200
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
