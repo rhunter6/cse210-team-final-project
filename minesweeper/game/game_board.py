@@ -22,6 +22,7 @@ class GameBoard(arcade.View):
         
         self.startTime = datetime.datetime.now()
         self.secondsToLoose = None
+        self.go_on = False
         
         arcade.set_background_color(arcade.color.LIGHT_GRAY)
         
@@ -77,11 +78,18 @@ class GameBoard(arcade.View):
         """
         Called when the user presses a mouse button.
         """
-
-        if self.secondsToLoose:
+        
+        if self.go_on:
             game_over = GameOver(self.secondsToLoose)
             game_over.on_draw()
             self.window.show_view(game_over)
+            return
+        if self.secondsToLoose:
+            self.go_on = True
+            for x in range(constants.ROW_COUNT):
+                for y in range(constants.COLUMN_COUNT):
+                    location = int((x * constants.COLUMN_COUNT + y))
+                    self.grid_sprite_list.append(MovePiece.move_piece(x,y,ExplosionCheck.check_left(location, x, y)))
             
         # Change the x/y screen coordinates to grid coordinates
         column = int(x // (constants.WIDTH + constants.MARGIN))
@@ -101,7 +109,7 @@ class GameBoard(arcade.View):
                 self.grid_sprite_list.append(new_sprite)
 
                 if test_value == "bomb":
-                    self.secondsToLoose = (datetime.datetime.now() - self.startTime).total_seconds()        
+                    self.secondsToLoose = (datetime.datetime.now() - self.startTime).total_seconds()
                 
             
                 
