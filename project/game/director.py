@@ -124,25 +124,27 @@ class Director(arcade.Window):
 
         # walls
         walls_to_draw = [
-        #   [ Position (Point),                              width (INT),    height (INT),   color ]
-            [ Point(10,200),                                    20,            1200,        "blue"    ],
-            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "blue"    ]
+        #   [ Position (Point)]
+            [ Point(10,200)],
+            [ Point(constants.SCREEN_WIDTH-10, 200)]
         ]
 
         for w in walls_to_draw:
 
-            width = w[WIDTH]
-            height = w[HEIGHT]
-            fill_color = w[COLOR]
+            # width = w[WIDTH]
+            # height = w[HEIGHT]
+            # fill_color = w[COLOR]
             x = w[POSITION].get_x()
             y = w[POSITION].get_y()
 
-            wall = "project/game/assets/images/tile1.png"
-            # wall = arcade.Sprite(wall_img, 0.5)
-            wall = Wall(width, height, color=fill_color)
-            wall.center_x = x
-            wall.center_y = y
-            self.wall_list.append(wall)
+            for y in range(0, 720, 64):
+
+                wall_img = "project/game/assets/images/wall_space2.png"
+                wall = arcade.Sprite(wall_img, 1)
+                # wall = Wall(width, height, color=fill_color)
+                wall.center_x = x
+                wall.center_y = y
+                self.wall_list.append(wall)
 
         # ladders
         ladders_to_draw = [
