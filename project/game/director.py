@@ -56,7 +56,7 @@ class Director(arcade.Window):
         self.setup_physics()
 
         # Set the background color
-        self.background = arcade.load_texture("project/game/assets/images/bg_spaceship1.png")
+        self.background = arcade.load_texture("project/game/assets/images/bg3.png")
         # arcade.set_background_color(arcade.color.JET)
 
     def create_sprites(self):
