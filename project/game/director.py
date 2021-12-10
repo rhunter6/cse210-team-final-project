@@ -137,6 +137,8 @@ class Director(arcade.Window):
             x = w[POSITION].get_x()
             y = w[POSITION].get_y()
 
+            wall = "project/game/assets/images/tile1.png"
+            # wall = arcade.Sprite(wall_img, 0.5)
             wall = Wall(width, height, color=fill_color)
             wall.center_x = x
             wall.center_y = y
@@ -199,7 +201,7 @@ class Director(arcade.Window):
 
         # player
         player_img = "project/game/assets/images/robot1.png"
-        self.the_player = Player(10, color="white")
+        # self.the_player = Player(10, color="white")
         self.the_player = arcade.Sprite(player_img, 0.5)
         self.the_player.center_x = 200
         self.the_player.center_y = 100

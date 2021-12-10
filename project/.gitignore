@@ -1,4 +1,6 @@
-project/game/actors/__pycache__
-project/game/game_objects/__pycache__
-project/game/actors/__pycache__
-.pyc
+/__pycache__/
+/game/__pycache__/
+/game/actors/__pycache__/
+/game/game_objects/__pycache__/
+/game/actors/__pycache__/
+*.pyc
