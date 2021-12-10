@@ -35,6 +35,10 @@ class Director(arcade.Window):
         self.wall_list = []
         self.ladder_list = []
 
+        #bg
+
+        self.background = []
+
         self.current_level = 1
 
     def setup(self):
@@ -52,7 +56,8 @@ class Director(arcade.Window):
         self.setup_physics()
 
         # Set the background color
-        arcade.set_background_color(arcade.color.JET)
+        self.background = arcade.load_texture("project/game/assets/images/bg_spaceship1.png")
+        # arcade.set_background_color(arcade.color.JET)
 
     def create_sprites(self):
         """ Draw the sprites
@@ -223,6 +228,8 @@ class Director(arcade.Window):
             none
         """
         arcade.start_render()
+
+        arcade.draw_lrwh_rectangle_textured(0, 0, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT,self.background)
 
         # "actors"
         self.player_list.draw()
