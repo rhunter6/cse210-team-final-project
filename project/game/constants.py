@@ -1,4 +1,4 @@
-SCREEN_TITLE = "tobedetermined"
+SCREEN_TITLE = "cycl0p5"
 SCREEN_WIDTH = 1366
 SCREEN_HEIGHT = 720
 
