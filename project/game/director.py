@@ -241,7 +241,7 @@ class Director(arcade.Window):
             self.draw_game_over()
         
         if self.check_player_won(): 
-            self.draw_game_won()
+            self.check_player_won()
 
             
     def draw_game_over(self):
