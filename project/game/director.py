@@ -148,23 +148,25 @@ class Director(arcade.Window):
 
         # ladders
         ladders_to_draw = [
-        #   [ Position (Point),                                             width (INT),    height (INT),   color ]
-            [ Point(constants.SCREEN_WIDTH-190, platform_0_height+105),            20,            150,        "green"    ],
-            [ Point(190,                        platform_1_height+105),            20,            150,        "green"    ],
-            [ Point(constants.SCREEN_WIDTH-190, platform_2_height+105),            20,            150,        "green"    ],
-            [ Point(190,                        platform_3_height+105),            20,            150,        "green"    ],
-            [ Point(constants.SCREEN_WIDTH-190, platform_4_height+105),            20,            150,        "green"    ],
+        #   [ Position (Point)]
+            [ Point(constants.SCREEN_WIDTH-190, platform_0_height+105)],
+            [ Point(190,                        platform_1_height+105)],
+            [ Point(constants.SCREEN_WIDTH-190, platform_2_height+105)],
+            [ Point(190,                        platform_3_height+105)],
+            [ Point(constants.SCREEN_WIDTH-190, platform_4_height+105)],
         ]
 
         for l in ladders_to_draw:
 
-            width = l[WIDTH]
-            height = l[HEIGHT]
-            fill_color = l[COLOR]
+            # width = l[WIDTH]
+            # height = l[HEIGHT]
+            # fill_color = l[COLOR]
             x = l[POSITION].get_x()
             y = l[POSITION].get_y()
 
-            wall = Ladder(width, height, color=fill_color)
+            wall_img = "project/game/assets/images/ladder.png"
+            wall = arcade.Sprite(wall_img, 0.5)
+            # wall = Ladder(width, height, color=fill_color)
             wall.center_x = x
             wall.center_y = y
             self.ladder_list.append(wall)
