@@ -96,7 +96,7 @@ class GameBoard(arcade.View):
         row = int(y // (constants.HEIGHT + constants.MARGIN))
         location = int((row * constants.COLUMN_COUNT + column))
 
-        #print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({column},{row}). Location: {location}")
+        
 
         # Make sure we are on-grid. It is possible to click in the upper right
         # corner in the margin and go to a grid location that doesn't exist
@@ -127,6 +127,4 @@ class GameBoard(arcade.View):
                 if test_value == "n":
                     new_sprite = MovePiece.move_piece(row,column, "default")
                     self.grid_sprite_list.append(new_sprite)
-            #for testing remove
-            # print(test_value)
-            # print(constants.MINE_FIELD)
+           
