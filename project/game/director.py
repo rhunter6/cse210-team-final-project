@@ -119,13 +119,13 @@ class Director(arcade.Window):
             x = p[POSITION].get_x()
             y = p[POSITION].get_y()
 
-            # for x in range(height, width , 35):
-            platform_img = "project/game/assets/images/tile2.png"
-            # platform = arcade.Sprite(platform_img, 0.5)
-            platform = Platform(width, height, color=fill_color)
-            platform.center_x = x
-            platform.center_y = y
-            self.platform_list.append(platform)
+            for x in range(height, width , 35):
+                platform_img = "project/game/assets/images/tile2.png"
+                platform = arcade.Sprite(platform_img, 0.5)
+                # platform = Platform(width, height, color=fill_color)
+                platform.center_x = x
+                platform.center_y = y
+                self.platform_list.append(platform)
 
         # walls
         walls_to_draw = [
