@@ -114,9 +114,14 @@ class Director(arcade.Window):
             width = p[WIDTH]
             height = p[HEIGHT]
             fill_color = p[COLOR]
+
+            
             x = p[POSITION].get_x()
             y = p[POSITION].get_y()
 
+            # for x in range(height, width , 35):
+            platform_img = "project/game/assets/images/tile2.png"
+            # platform = arcade.Sprite(platform_img, 0.5)
             platform = Platform(width, height, color=fill_color)
             platform.center_x = x
             platform.center_y = y
@@ -204,9 +209,9 @@ class Director(arcade.Window):
             self.enemy_list.append(enemy)
 
         # player
-        player_img = "project/game/assets/images/robot1.png"
-        # self.the_player = Player(10, color="white")
-        self.the_player = arcade.Sprite(player_img, 0.5)
+        # player_img = "project/game/assets/images/robot1.png"
+        self.the_player = Player(10, color="white")
+        # self.the_player = arcade.Sprite(player_img, 0.5)
         self.the_player.center_x = 200
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
