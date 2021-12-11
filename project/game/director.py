@@ -1,5 +1,6 @@
 import arcade
 import sys
+import random 
 from game import constants
 from game.point import Point
 
@@ -101,12 +102,12 @@ class Director(arcade.Window):
 
         platforms_to_draw = [
         #   [ Position (Point),                                             width (INT),                 height (INT), color ]
-            [ Point((constants.SCREEN_WIDTH/2),     platform_0_height+15),               constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_1_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2+200), platform_2_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_3_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2+200), platform_4_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_5_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
+            [ Point((constants.SCREEN_WIDTH/2),     platform_0_height+15),               constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_1_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), platform_2_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_3_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), platform_4_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_5_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
         ]
 
         for p in platforms_to_draw:
@@ -125,8 +126,8 @@ class Director(arcade.Window):
         # walls
         walls_to_draw = [
         #   [ Position (Point),                              width (INT),    height (INT),   color ]
-            [ Point(10,200),                                    20,            1200,        "blue"    ],
-            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "blue"    ]
+            [ Point(10,200),                                    20,            1200,        "black"    ],
+            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "black"    ]
         ]
 
         for w in walls_to_draw:
@@ -192,9 +193,12 @@ class Director(arcade.Window):
             x = e[POSITION].get_x()
             y = e[POSITION].get_y()
             
-            enemy = Enemy(width, height, color=fill_color)
+            enemy_img = "project/game/assets/images/enemy1.png"
+            #enemy = Enemy(width, height, color=fill_color)
+            enemy = Enemy(enemy_img, 0.15)
             enemy.center_x = x
             enemy.center_y = y
+            enemy.spawn_x = x
             self.enemy_list.append(enemy)
 
         # player
@@ -345,6 +349,7 @@ class Director(arcade.Window):
             if is_colliding_with_enemy:
                 self.debug_console(f'GAME OVER')
                 sys.exit()
+
             
     def check_for_enemy_deaths(self):
         """ Checks for enemies with 0 HP and removes them from play
@@ -353,6 +358,12 @@ class Director(arcade.Window):
             hp = enemy.get_hp()
             if hp == 0:
                 self.enemy_list.remove(enemy)
+
+    def enemy_movement(self):
+        for enemy in self.enemy_list:
+            distance_from_spawn = abs(enemy.center_x - enemy.spawn_x)
+            if distance_from_spawn > 100:
+                enemy.reverse_direction()
 
 
     def destroy_bullet(self, bullet):
@@ -369,6 +380,8 @@ class Director(arcade.Window):
         """
         self.check_collisions()
         self.check_for_enemy_deaths()
+        self.enemy_movement()
+        self.enemy_list.update()
         self.projectile_list.update()
         self.PHYSICS.update()
 
