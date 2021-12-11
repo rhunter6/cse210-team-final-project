@@ -424,9 +424,7 @@ class Director(arcade.Window):
             is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
             if is_colliding_with_enemy:
                 self.debug_console(f'GAME OVER')
-#<<<<<<< alan
-#                sys.exit()
-#=======
+
                 return(is_colliding_with_enemy)
 
     def check_player_won(self):
