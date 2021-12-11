@@ -241,7 +241,7 @@ class Director(arcade.Window):
             self.draw_game_over()
         
         if self.check_player_won(): 
-            self.check_player_won()
+            self.draw_game_won()
 
             
     def draw_game_over(self):
@@ -254,7 +254,7 @@ class Director(arcade.Window):
         start_y = constants.SCREEN_HEIGHT//2 -100
         arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
 
-    def draw_game_over(self):
+    def draw_game_won(self):
         msg_text = "GOOD JOB"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
