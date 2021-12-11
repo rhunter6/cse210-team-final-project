@@ -269,25 +269,25 @@ class Director(arcade.Window):
         msg_text = "GAME OVER"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.GREEN,font_name="Kenney Blocks")
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.YELLOW_ORANGE,font_name="Kenney Blocks")
         msg_text = "Press Enter to Try again" 
         start_x = constants.SCREEN_WIDTH//2 - 245
-        start_y = constants.SCREEN_HEIGHT//2 - 100
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.DARK_GREEN)
+        start_y = constants.SCREEN_HEIGHT//2 - 140
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
 
     def draw_game_won(self):
         msg_text = "GOOD JOB"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.BLUE)
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.YELLOW_ORANGE, font_name="Kenney Blocks")
         msg_text = "YOU WON THE GAME" 
         start_x = constants.SCREEN_WIDTH//2 - 263
         start_y = constants.SCREEN_HEIGHT//2 -100
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.BLUE)
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
         msg_text = "Press Enter to Play again" 
-        start_x = constants.SCREEN_WIDTH//2 - 240
-        start_y = constants.SCREEN_HEIGHT//2 -300
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        start_x = constants.SCREEN_WIDTH//2 - 275
+        start_y = constants.SCREEN_HEIGHT//2 -200
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
         
     def shoot(self):
         """ Shoots a single bullet
