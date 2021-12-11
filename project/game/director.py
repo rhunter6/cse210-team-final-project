@@ -199,8 +199,8 @@ class Director(arcade.Window):
 
         # player
         player_img = "project/game/assets/images/robot1.png"
-        self.the_player = Player(10, color="white")
-        self.the_player = arcade.Sprite(player_img, 0.5)
+        #self.the_player = Player(10, color="white")
+        self.the_player = Player(player_img, 0.5)
         self.the_player.center_x = 200
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
