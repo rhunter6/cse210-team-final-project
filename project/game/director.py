@@ -41,6 +41,7 @@ class Director(arcade.Window):
 
         #bg
 
+        self.game_over = False
         self.background = []
 
         self.current_level = 1
@@ -71,7 +72,9 @@ class Director(arcade.Window):
             none
         """
         # "actors"
-        self.player_list = arcade.SpriteList()
+        if self.game_over == False:
+            self.player_list = arcade.SpriteList()
+        
         self.enemy_list = arcade.SpriteList()
         self.projectile_list = arcade.SpriteList()
         self.trophy_list = arcade.SpriteList()
@@ -274,6 +277,7 @@ class Director(arcade.Window):
         start_x = constants.SCREEN_WIDTH//2 - 245
         start_y = constants.SCREEN_HEIGHT//2 - 140
         arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
+
 
     def draw_game_won(self):
         msg_text = "GOOD JOB"
