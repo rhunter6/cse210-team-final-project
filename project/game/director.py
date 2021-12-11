@@ -1,6 +1,8 @@
 import arcade
 import sys
 import random 
+
+from arcade.sprite_list.spatial_hash import check_for_collision
 from game import constants
 from game.point import Point
 
@@ -248,6 +250,37 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
+        if self.check_player_alive(): 
+            self.draw_game_over()
+        
+        if self.check_player_won(): 
+            self.draw_game_won()
+
+            
+    def draw_game_over(self):
+        msg_text = "GAME OVER"
+        start_x =  constants.SCREEN_WIDTH//2 - 200
+        start_y = constants.SCREEN_HEIGHT//2
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.NAVY_BLUE)
+        msg_text = "Press Enter to Try again" 
+        start_x = constants.SCREEN_WIDTH//2 - 243
+        start_y = constants.SCREEN_HEIGHT//2 -100
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+
+    def draw_game_won(self):
+        msg_text = "GOOD JOB"
+        start_x =  constants.SCREEN_WIDTH//2 - 200
+        start_y = constants.SCREEN_HEIGHT//2
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.NAVY_BLUE)
+        msg_text = "YOU WON THE GAME" 
+        start_x = constants.SCREEN_WIDTH//2 - 263
+        start_y = constants.SCREEN_HEIGHT//2 -100
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        msg_text = "Press Enter to Play again" 
+        start_x = constants.SCREEN_WIDTH//2 - 240
+        start_y = constants.SCREEN_HEIGHT//2 -100
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        
     def shoot(self):
         """ Shoots a single bullet
         ARGS:
@@ -310,6 +343,11 @@ class Director(arcade.Window):
             # shoot a bullet
             self.shoot()
 
+        # Restart
+        else:
+            if key == arcade.key.ENTER:
+                self.restart()
+
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key.
         ARGS:
@@ -343,12 +381,24 @@ class Director(arcade.Window):
                     self.debug_console('BULLET colliding with ENEMY')
                     self.debug_console(f'ENEMY._hp = {enemy_hp}')
 
+    def check_player_alive(self):
         # player-enemy collision
         for enemy in self.enemy_list:
             is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
             if is_colliding_with_enemy:
                 self.debug_console(f'GAME OVER')
-                sys.exit()
+#<<<<<<< alan
+#                sys.exit()
+#=======
+                return(is_colliding_with_enemy)
+
+    def check_player_won(self):
+        # player-enemy collision
+        for coin in self.coin_list:
+            is_won = arcade.check_for_collision(self.the_player, coin)
+            if is_won:
+                return(is_won)
+#>>>>>>> master
 
             
     def check_for_enemy_deaths(self):
@@ -388,3 +438,16 @@ class Director(arcade.Window):
     def debug_console(self,string):
         if constants.DEBUG_MODE:
             print(string)
+
+    def restart(self):
+        self.player_list.clear
+        self.enemy_list.clear
+        self.projectile_list.clear 
+        self.coin_list.clear
+
+        # "props"
+        self.platform_list.clear
+        self.wall_list.clear
+        self.ladder_list.clear
+         
+        self.setup()
