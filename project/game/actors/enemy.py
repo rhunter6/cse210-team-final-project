@@ -14,7 +14,7 @@ class Enemy(arcade.Sprite, Actor):
         
         super().__init__(filename=filename, scale=scale, image_x=image_x, image_y=image_y, image_width=image_width, image_height=image_height, center_x=center_x, center_y=center_y, repeat_count_x=repeat_count_x, repeat_count_y=repeat_count_y, flipped_horizontally=flipped_horizontally, flipped_vertically=flipped_vertically, flipped_diagonally=flipped_diagonally, hit_box_algorithm=hit_box_algorithm, hit_box_detail=hit_box_detail, texture=texture, angle=angle)
 
-        self.set_hp(10)
+        self.set_hp(constants.ENEMY_HP)
         self.change_x = constants.ENEMY_SPEED * random.choice([-1, 1])
 
     def reverse_direction(self):

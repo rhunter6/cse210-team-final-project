@@ -8,6 +8,7 @@ from game.point import Point
 
 from game.actor import Actor
 from game.actors.player import Player
+from game.actors.trophy import Trophy
 from game.actors.bullet import Bullet
 from game.actors.enemy import Enemy
 
@@ -31,7 +32,7 @@ class Director(arcade.Window):
         self.player_list = []
         self.enemy_list = []
         self.projectile_list = []
-        self.coin_list = []
+        self.trophy_list = []
 
         # "props"
         self.platform_list = []
@@ -40,6 +41,7 @@ class Director(arcade.Window):
 
         #bg
 
+        self.game_over = False
         self.background = []
 
         self.current_level = 1
@@ -70,10 +72,12 @@ class Director(arcade.Window):
             none
         """
         # "actors"
-        self.player_list = arcade.SpriteList()
+        if self.game_over == False:
+            self.player_list = arcade.SpriteList()
+        
         self.enemy_list = arcade.SpriteList()
         self.projectile_list = arcade.SpriteList()
-        self.coin_list = arcade.SpriteList()
+        self.trophy_list = arcade.SpriteList()
 
         # "props"
         self.platform_list = arcade.SpriteList()
@@ -222,6 +226,13 @@ class Director(arcade.Window):
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
 
+        # trophy
+        trophy_img = "project/game/assets/images/trophy.png"
+        trophy = Trophy(trophy_img, 0.10)
+        trophy.center_x = 1250
+        trophy.center_y = 660
+        self.trophy_list.append(trophy)
+
 
     def setup_physics(self):
         player_sprite = self.the_player
@@ -254,7 +265,7 @@ class Director(arcade.Window):
         self.player_list.draw()
         self.enemy_list.draw()
         self.projectile_list.draw()
-        self.coin_list.draw()
+        self.trophy_list.draw()
 
         # "props"
         self.platform_list.draw()
@@ -272,25 +283,26 @@ class Director(arcade.Window):
         msg_text = "GAME OVER"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.NAVY_BLUE)
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.YELLOW_ORANGE,font_name="Kenney Blocks")
         msg_text = "Press Enter to Try again" 
-        start_x = constants.SCREEN_WIDTH//2 - 243
-        start_y = constants.SCREEN_HEIGHT//2 -100
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        start_x = constants.SCREEN_WIDTH//2 - 245
+        start_y = constants.SCREEN_HEIGHT//2 - 140
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
+
 
     def draw_game_won(self):
         msg_text = "GOOD JOB"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.NAVY_BLUE)
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.YELLOW_ORANGE, font_name="Kenney Blocks")
         msg_text = "YOU WON THE GAME" 
         start_x = constants.SCREEN_WIDTH//2 - 263
         start_y = constants.SCREEN_HEIGHT//2 -100
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
         msg_text = "Press Enter to Play again" 
-        start_x = constants.SCREEN_WIDTH//2 - 240
-        start_y = constants.SCREEN_HEIGHT//2 -100
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.NAVY_BLUE)
+        start_x = constants.SCREEN_WIDTH//2 - 275
+        start_y = constants.SCREEN_HEIGHT//2 -200
+        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
         
     def shoot(self):
         """ Shoots a single bullet
@@ -405,11 +417,9 @@ class Director(arcade.Window):
 
     def check_player_won(self):
         # player-enemy collision
-        for coin in self.coin_list:
-            is_won = arcade.check_for_collision(self.the_player, coin)
-            if is_won:
-                return(is_won)
-#>>>>>>> master
+        #for coin in self.coin_list:
+        is_won = arcade.check_for_collision_with_list(self.the_player, self.trophy_list)
+        return is_won
 
             
     def check_for_enemy_deaths(self):
@@ -439,6 +449,7 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
+        self.check_player_won()
         self.check_collisions()
         self.check_for_enemy_deaths()
         self.enemy_movement()
