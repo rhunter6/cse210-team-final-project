@@ -8,6 +8,7 @@ from game.point import Point
 
 from game.actor import Actor
 from game.actors.player import Player
+from game.actors.trophy import Trophy
 from game.actors.bullet import Bullet
 from game.actors.enemy import Enemy
 
@@ -31,7 +32,7 @@ class Director(arcade.Window):
         self.player_list = []
         self.enemy_list = []
         self.projectile_list = []
-        self.coin_list = []
+        self.trophy_list = []
 
         # "props"
         self.platform_list = []
@@ -73,7 +74,7 @@ class Director(arcade.Window):
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.projectile_list = arcade.SpriteList()
-        self.coin_list = arcade.SpriteList()
+        self.trophy_list = arcade.SpriteList()
 
         # "props"
         self.platform_list = arcade.SpriteList()
@@ -211,6 +212,13 @@ class Director(arcade.Window):
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
 
+        # trophy
+        trophy_img = "project/game/assets/images/trophy.png"
+        trophy = Trophy(trophy_img, 0.10)
+        trophy.center_x = 1250
+        trophy.center_y = 660
+        self.trophy_list.append(trophy)
+
 
     def setup_physics(self):
         player_sprite = self.the_player
@@ -243,7 +251,7 @@ class Director(arcade.Window):
         self.player_list.draw()
         self.enemy_list.draw()
         self.projectile_list.draw()
-        self.coin_list.draw()
+        self.trophy_list.draw()
 
         # "props"
         self.platform_list.draw()
@@ -394,11 +402,9 @@ class Director(arcade.Window):
 
     def check_player_won(self):
         # player-enemy collision
-        for coin in self.coin_list:
-            is_won = arcade.check_for_collision(self.the_player, coin)
-            if is_won:
-                return(is_won)
-#>>>>>>> master
+        #for coin in self.coin_list:
+        is_won = arcade.check_for_collision_with_list(self.the_player, self.trophy_list)
+        return is_won
 
             
     def check_for_enemy_deaths(self):
@@ -428,6 +434,7 @@ class Director(arcade.Window):
         RETURNS:
             none
         """
+        self.check_player_won()
         self.check_collisions()
         self.check_for_enemy_deaths()
         self.enemy_movement()
