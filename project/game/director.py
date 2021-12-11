@@ -1,5 +1,6 @@
 import arcade
 import sys
+import random 
 
 from arcade.sprite_list.spatial_hash import check_for_collision
 from game import constants
@@ -103,12 +104,12 @@ class Director(arcade.Window):
 
         platforms_to_draw = [
         #   [ Position (Point),                                             width (INT),                 height (INT), color ]
-            [ Point((constants.SCREEN_WIDTH/2),     platform_0_height+15),               constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_1_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2+200), platform_2_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_3_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2+200), platform_4_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
-            [ Point((constants.SCREEN_WIDTH/2-200), platform_5_height+15),         constants.SCREEN_WIDTH,    30,  "brown" ],
+            [ Point((constants.SCREEN_WIDTH/2),     platform_0_height+15),               constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_1_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), platform_2_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_3_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2+200), platform_4_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
+            [ Point((constants.SCREEN_WIDTH/2-200), platform_5_height+15),         constants.SCREEN_WIDTH,    30,  "black" ],
         ]
 
         for p in platforms_to_draw:
@@ -131,9 +132,10 @@ class Director(arcade.Window):
 
         # walls
         walls_to_draw = [
-        #   [ Position (Point)]
-            [ Point(10,200)],
-            [ Point(constants.SCREEN_WIDTH-10, 200)]
+
+        #   [ Position (Point),                              width (INT),    height (INT),   color ]
+            [ Point(10,200),                                    20,            1200,        "black"    ],
+            [ Point(constants.SCREEN_WIDTH-10, 200),            20,            1200,        "black"    ]
         ]
 
         for w in walls_to_draw:
@@ -205,15 +207,17 @@ class Director(arcade.Window):
             x = e[POSITION].get_x()
             y = e[POSITION].get_y()
             
-            enemy = Enemy(width, height, color=fill_color)
+            enemy_img = "project/game/assets/images/enemy1.png"
+            #enemy = Enemy(width, height, color=fill_color)
+            enemy = Enemy(enemy_img, 0.15)
             enemy.center_x = x
             enemy.center_y = y
+            enemy.spawn_x = x
             self.enemy_list.append(enemy)
 
-        # player
-        # player_img = "project/game/assets/images/robot1.png"
-        self.the_player = Player(10, color="white")
-        # self.the_player = arcade.Sprite(player_img, 0.5)
+        player_img = "project/game/assets/images/robot1.png"
+        #self.the_player = Player(10, color="white")
+        self.the_player = Player(player_img, 0.5)
         self.the_player.center_x = 200
         self.the_player.center_y = 100
         self.player_list.append(self.the_player)
@@ -394,6 +398,9 @@ class Director(arcade.Window):
             is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
             if is_colliding_with_enemy:
                 self.debug_console(f'GAME OVER')
+#<<<<<<< alan
+#                sys.exit()
+#=======
                 return(is_colliding_with_enemy)
 
     def check_player_won(self):
@@ -402,6 +409,7 @@ class Director(arcade.Window):
             is_won = arcade.check_for_collision(self.the_player, coin)
             if is_won:
                 return(is_won)
+#>>>>>>> master
 
             
     def check_for_enemy_deaths(self):
@@ -411,6 +419,12 @@ class Director(arcade.Window):
             hp = enemy.get_hp()
             if hp == 0:
                 self.enemy_list.remove(enemy)
+
+    def enemy_movement(self):
+        for enemy in self.enemy_list:
+            distance_from_spawn = abs(enemy.center_x - enemy.spawn_x)
+            if distance_from_spawn > 100:
+                enemy.reverse_direction()
 
 
     def destroy_bullet(self, bullet):
@@ -427,6 +441,8 @@ class Director(arcade.Window):
         """
         self.check_collisions()
         self.check_for_enemy_deaths()
+        self.enemy_movement()
+        self.enemy_list.update()
         self.projectile_list.update()
         self.PHYSICS.update()
 
