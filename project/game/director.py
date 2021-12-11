@@ -272,14 +272,22 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
+        #if the player is no longer alive, draw game over screen
         if self.check_player_alive(): 
             self.draw_game_over()
         
+        #if the player gets the trophy, draw game won screen
         if self.check_player_won(): 
             self.draw_game_won()
 
             
     def draw_game_over(self):
+        """draws a game over screen with user friendly messages
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         msg_text = "GAME OVER"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
@@ -291,6 +299,12 @@ class Director(arcade.Window):
 
 
     def draw_game_won(self):
+        """draws a you won screen with user friendly messages
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         msg_text = "GOOD JOB"
         start_x =  constants.SCREEN_WIDTH//2 - 200
         start_y = constants.SCREEN_HEIGHT//2
@@ -385,7 +399,12 @@ class Director(arcade.Window):
             self.the_player.change_x = 0
 
     def check_collisions(self):
-
+        """ Checks for collisions between bullets, walls and enemies
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         for bullet in self.projectile_list:
 
             # bullet-wall collision
@@ -405,25 +424,38 @@ class Director(arcade.Window):
                     self.debug_console(f'ENEMY._hp = {enemy_hp}')
 
     def check_player_alive(self):
+        """ Checks for enemy collision with the player
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         # player-enemy collision
         for enemy in self.enemy_list:
             is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
             if is_colliding_with_enemy:
                 self.debug_console(f'GAME OVER')
-#<<<<<<< alan
-#                sys.exit()
-#=======
+
                 return(is_colliding_with_enemy)
 
     def check_player_won(self):
+        """ Checks for trophy collision with the player
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         # player-enemy collision
-        #for coin in self.coin_list:
         is_won = arcade.check_for_collision_with_list(self.the_player, self.trophy_list)
         return is_won
 
             
     def check_for_enemy_deaths(self):
         """ Checks for enemies with 0 HP and removes them from play
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
         """
         for enemy in self.enemy_list:
             hp = enemy.get_hp()
@@ -431,6 +463,12 @@ class Director(arcade.Window):
                 self.enemy_list.remove(enemy)
 
     def enemy_movement(self):
+        """ Moved enemies
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
         for enemy in self.enemy_list:
             distance_from_spawn = abs(enemy.center_x - enemy.spawn_x)
             if distance_from_spawn > 100:
@@ -446,6 +484,7 @@ class Director(arcade.Window):
         """ Does physics and other updates
         ARGS:
             self (Director): an instance of Director
+            delta_time: a module that keeps game running at live time.
         RETURNS:
             none
         """
@@ -462,10 +501,15 @@ class Director(arcade.Window):
             print(string)
 
     def restart(self):
+        """Restarts game by repositing the actors.
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none"""
         self.player_list.clear
         self.enemy_list.clear
         self.projectile_list.clear 
-        self.coin_list.clear
+        self.trophy_list.clear
 
         # "props"
         self.platform_list.clear
