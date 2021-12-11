@@ -64,6 +64,7 @@ class Director(arcade.Window):
         self.background = arcade.load_texture("project/game/assets/images/bg3.png")
         # arcade.set_background_color(arcade.color.JET)
 
+        
     def create_sprites(self):
         """ Draw the sprites
         ARGS:
@@ -261,30 +262,27 @@ class Director(arcade.Window):
         self.wall_list.draw()
         self.ladder_list.draw()
 
-        #if the player is no longer alive, draw game over screen
-        if self.check_player_alive(): 
-            self.draw_game_over()
+        #if the hero is touching robot, draw complaints message and play corrisponding audio
+        if self.check_robot_complaining(): 
+            self.draw_robot_complaining()
+            self.play_robot_complaining()
         
         #if the player gets the trophy, draw game won screen
         if self.check_player_won(): 
             self.draw_game_won()
-
+            self.play_winning_sound()
             
-    def draw_game_over(self):
+    def draw_robot_complaining(self):
         """draws a game over screen with user friendly messages
         ARGS:
             self (Director): an instance of Director
         RETURNS:
             none
         """
-        msg_text = "GAME OVER"
-        start_x =  constants.SCREEN_WIDTH//2 - 200
+        msg_text = "STOP TOUCHING ME!"
+        start_x =  constants.SCREEN_WIDTH//2 - 250
         start_y = constants.SCREEN_HEIGHT//2
         arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=40, color=arcade.color.YELLOW_ORANGE,font_name="Kenney Blocks")
-        msg_text = "Press Enter to Try again" 
-        start_x = constants.SCREEN_WIDTH//2 - 245
-        start_y = constants.SCREEN_HEIGHT//2 - 140
-        arcade.draw_text(msg_text, start_x=start_x, start_y=start_y, font_size=30, color=arcade.color.GREEN)
 
 
     def draw_game_won(self):
@@ -368,6 +366,8 @@ class Director(arcade.Window):
         elif key == arcade.key.SPACE:
             # shoot a bullet
             self.shoot()
+            #play associated sound
+            self.play_shooting_sound()
 
         # Restart
         else:
@@ -412,7 +412,7 @@ class Director(arcade.Window):
                     self.debug_console('BULLET colliding with ENEMY')
                     self.debug_console(f'ENEMY._hp = {enemy_hp}')
 
-    def check_player_alive(self):
+    def check_robot_complaining(self):
         """ Checks for enemy collision with the player
         ARGS:
             self (Director): an instance of Director
@@ -423,12 +423,8 @@ class Director(arcade.Window):
         for enemy in self.enemy_list:
             is_colliding_with_enemy = arcade.check_for_collision(self.the_player, enemy)
             if is_colliding_with_enemy:
-                self.debug_console(f'GAME OVER')
-#<<<<<<< alan
-#                sys.exit()
-#=======
                 return(is_colliding_with_enemy)
-
+    
     def check_player_won(self):
         """ Checks for trophy collision with the player
         ARGS:
@@ -508,3 +504,44 @@ class Director(arcade.Window):
         self.ladder_list.clear
          
         self.setup()
+
+    def play_robot_complaining(self):
+        """plays audio file of robot complaining
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+        """
+        # Loading the audio files
+        complaining = arcade.load_sound("project/game/assets/sounds/mixkit-game-notification-wave-alarm-987.wav",False)
+        
+        # Playing the audio
+        arcade.play_sound(complaining,1.0,-1,False)
+
+    def play_winning_sound(self):
+        """plays audio file for when the game is won
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+            """
+        # Loading the audio files
+        win = arcade.load_sound("project/game/assets/sounds/mixkit-melodic-bonus-collect-1938.wav",False)
+        
+        # Playing the audio
+        arcade.play_sound(win,1.0,-1,False)
+
+    
+
+    def play_shooting_sound(self):
+        """plays audio file for when the bullets are shot
+        ARGS:
+            self (Director): an instance of Director
+        RETURNS:
+            none
+            """
+        # Loading the audio files
+        shoot = arcade.load_sound("project/game/assets/sounds/mixkit-short-laser-gun-shot-1670.wav",False)
+        
+        # Playing the audio
+        arcade.play_sound(shoot,1.0,-1,False)
