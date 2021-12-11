@@ -454,7 +454,7 @@ class Director(arcade.Window):
         self.player_list.clear
         self.enemy_list.clear
         self.projectile_list.clear 
-        self.coin_list.clear
+        self.trophy_list.clear
 
         # "props"
         self.platform_list.clear
