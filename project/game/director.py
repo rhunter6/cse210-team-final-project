@@ -127,13 +127,13 @@ class Director(arcade.Window):
             x = p[POSITION].get_x()
             y = p[POSITION].get_y()
 
-            for x in range(0,width, 35):
-                platform_img = "project/game/assets/images/tile2.png"
-                # platform = Platform(width, height, color=fill_color)
-                platform = Platform(platform_img, 0.5)
-                platform.center_x = x
-                platform.center_y = y
-                self.platform_list.append(platform)
+            # for x in range(int(x-650),width, 35):
+            # platform_img = "project/game/assets/images/tile2.png"
+            platform = Platform(width, height, color=fill_color)
+            # platform = Platform(platform_img, 0.5)
+            platform.center_x = x
+            platform.center_y = y
+            self.platform_list.append(platform)
 
         # walls
         walls_to_draw = [
@@ -163,11 +163,11 @@ class Director(arcade.Window):
         # ladders
         ladders_to_draw = [
         #   [ Position (Point)]
-            [ Point(constants.SCREEN_WIDTH-190, platform_0_height+105)],
-            [ Point(190,                        platform_1_height+105)],
-            [ Point(constants.SCREEN_WIDTH-190, platform_2_height+105)],
-            [ Point(190,                        platform_3_height+105)],
-            [ Point(constants.SCREEN_WIDTH-190, platform_4_height+105)],
+            [ Point(constants.SCREEN_WIDTH-175, platform_0_height+105)],
+            [ Point(175,                        platform_1_height+105)],
+            [ Point(constants.SCREEN_WIDTH-175, platform_2_height+105)],
+            [ Point(175,                        platform_3_height+105)],
+            [ Point(constants.SCREEN_WIDTH-175, platform_4_height+105)],
         ]
 
         for l in ladders_to_draw:
@@ -179,7 +179,7 @@ class Director(arcade.Window):
             y = l[POSITION].get_y()
 
             wall_img = "project/game/assets/images/ladder.png"
-            wall = arcade.Sprite(wall_img, 0.5)
+            wall = arcade.Sprite(wall_img, 1, image_width=70, image_height= 150)
             # wall = Ladder(width, height, color=fill_color)
             wall.center_x = x
             wall.center_y = y
